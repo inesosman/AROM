@@ -1,6 +1,5 @@
 # **AROM** (**A**lignments **R**euse for **O**ntology **M**erging)
 AROM is a novel approach for refactoring and merging multiple ontologies at a time using alignments.
-
 Here is a merge example.
 
 
