@@ -52,9 +52,9 @@ Here is the definition/description of __Skin_structure_of_head__ class in its or
 
 
 ## Output Merged Ontology
-These correspondences will lead to the merging of the three matched classes: "Skin_of_head" (from FMA (Ont1)), "Head_Skin" (from NCI (Ont2)), and "Skin_structure_of_head" (from SNOMED (Ont3)).
+These correspondences will lead to the merging of the three matched classes: __Skin_of_head__ (from FMA (Ont1)), __Head_Skin__ (from NCI (Ont2)), and __Skin_structure_of_head__ (from SNOMED (Ont3)).
 
-The following figures show the merged class in our output ontology that resulted from the merging of the three LargeBio ontologies. The added labels framed in red are the abbreviated original names of the classes that have been merged. We attached each name to its ontology number (ID) to directly see from which ontology it originates.
+The following figures show the merged class (__Code_1379__) in our output ontology that resulted from the merging of the three __LargeBio__ ontologies. The added labels framed in red are the abbreviated original names of the classes that have been merged. We attached each name to its ontology number (ID) to directly see from which ontology it originates. Notice that all entities and axioms defining the input classes are preserved.
 
 #### Non Refactored Version
 
