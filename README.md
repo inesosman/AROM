@@ -20,17 +20,19 @@ These are three equivalence correspondences from the "Large Biomedical Ontologie
 
 
 
-These correspondences will lead to the merging of the three matched classes: "Skin_of_head" (from FMA (Ont1)), "Head_Skin" (from NCI (Ont2)), and "Skin_structure_of_head" (from SNOMED (Ont3)).
+
+==> These correspondences will lead to the merging of the three matched classes: "Skin_of_head" (from FMA (Ont1)), "Head_Skin" (from NCI (Ont2)), and "Skin_structure_of_head" (from SNOMED (Ont3)).
 
 
-Here is the definition/description of "Skin_of_head" class in its original ontology (from FMA (Ont1)) :
+
+* Here is the definition/description of "Skin_of_head" class in its original ontology (from FMA (Ont1)) :
 
 ![Skin_of_head](https://github.com/inesosman/AROM/blob/master/Figures/FMA_Class.png)
 
-Here is the definition/description of "Head_Skin" class in its original ontology (from NCI (Ont2)) :
+* Here is the definition/description of "Head_Skin" class in its original ontology (from NCI (Ont2)) :
 
 ![Head_Skin](https://github.com/inesosman/AROM/blob/master/Figures/NCI_Class.png)
 
-Here is the definition/description of "Skin_structure_of_head" class in its original ontology (from SNOMED (Ont3)) :
+* Here is the definition/description of "Skin_structure_of_head" class in its original ontology (from SNOMED (Ont3)) :
 
 ![Skin_structure_of_head](https://github.com/inesosman/AROM/blob/master/Figures/SNOMED_Class.png)
