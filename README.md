@@ -1,4 +1,4 @@
-# AROM
+# **AROM** (**A**lignments **R**euse for **O**ntologies' **M**erging)
 A novel approach for refactoring and merging multiple ontologies at a time using alignments
 
 
