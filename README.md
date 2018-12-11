@@ -71,5 +71,5 @@ For the customized version, axioms are like the original ones, except that the I
 
 
 * Our final ontology is complete, in the sense that it retains all entities, axioms and hierarchies from the input ontologies.
-* Running AROM for merging the *Large Biomedical Ontologies* did not exceed **one minute**.
+* Running AROM for merging the *Large Biomedical Ontologies* do not exceed **one minute**.
 
