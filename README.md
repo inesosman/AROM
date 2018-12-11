@@ -2,7 +2,7 @@
 A novel approach for refactoring and merging multiple ontologies at a time using alignments
 
 
-# Example
+# Merge Example
 
 
 ## Input Alignments
@@ -51,4 +51,20 @@ Here is the definition/description of __Skin_structure_of_head__ class in its or
 ![Skin_structure_of_head](https://github.com/inesosman/AROM/blob/master/Figures/SNOMED_Class.png)
 
 
-==> These correspondences will lead to the merging of the three matched classes: "Skin_of_head" (from FMA (Ont1)), "Head_Skin" (from NCI (Ont2)), and "Skin_structure_of_head" (from SNOMED (Ont3)).
+## Output Merged Ontology
+These correspondences will lead to the merging of the three matched classes: "Skin_of_head" (from FMA (Ont1)), "Head_Skin" (from NCI (Ont2)), and "Skin_structure_of_head" (from SNOMED (Ont3)).
+
+The following figures show the merged class in our output ontology that resulted from the merging of the three LargeBio ontologies. The added labels framed in red are the abbreviated original names of the classes that have been merged. We attached each name to its ontology number (ID) to directly see from which ontology it originates.
+
+#### Non Refactored Version
+
+![MergedClass](https://github.com/inesosman/AROM/blob/master/Figures/MergedClass.png)
+
+For the non customized version, axioms are exactly like the original ones.
+
+#### Refactored Version
+
+![RefactoredMergedClass](https://github.com/inesosman/AROM/blob/master/Figures/RefactoredMergedClass.png)
+
+For the customized version, axioms are like the original ones, except that the IRIs of all mentioned entities are customized.
+
