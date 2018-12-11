@@ -8,19 +8,19 @@ Here is a merge example.
 
 These are three equivalence correspondences from the "Large Biomedical Ontologies" OAEI reference alignments.
 
-### FMA-NCI Alignment
+### FMA-NCI
 
 The first correspondence matches the __Skin_of_head__ class (in FMA) to the __Head_Skin__ class (in NCI):
 
 ![FMA-NCI alignment](https://github.com/inesosman/AROM/blob/master/Figures/FMA-NCI.png)
 
-### SNOMED-NCI Alignment
+### SNOMED-NCI
 
 The second correspondence matches the __Skin_structure_of_head__ class (in SNOMED) to the __Head_Skin__ class (in NCI):
 
 ![SNOMED-NCI alignment](https://github.com/inesosman/AROM/blob/master/Figures/FMA-SNOMED.png)
 
-### FMA-SNOMED Alignment
+### FMA-SNOMED
 
 The third correspondence matches the __Skin_of_head__ class (in FMA) to the __Skin_structure_of_head__ class (in SNOMED):
 
