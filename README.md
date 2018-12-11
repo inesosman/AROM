@@ -18,7 +18,7 @@ The first correspondence matches the __Skin_of_head__ class (in FMA) to the __He
 
 The second correspondence matches the __Skin_structure_of_head__ class (in SNOMED) to the __Head_Skin__ class (in NCI):
 
-![SNOMED-NCI alignment](https://github.com/inesosman/AROM/blob/master/Figures/FMA-SNOMED.png)
+![SNOMED-NCI alignment](https://github.com/inesosman/AROM/blob/master/Figures/SNOMED-NCI.png)
 
 ### FMA-SNOMED
 
