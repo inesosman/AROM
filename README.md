@@ -64,6 +64,7 @@ You can view and download all our merged ontologies from the [Results folder.](h
 ![MergedClass](https://github.com/inesosman/AROM/blob/master/Figures/MergedClass.png)
 
 For the non customized version, axioms are exactly like the original ones.
+
 We could not upload this merged ontology because of its big size.
 
 ### Refactored Version
