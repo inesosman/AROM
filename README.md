@@ -56,6 +56,8 @@ These correspondences will lead to the merging of the three matched classes: __S
 
 The following figures show the merged class in our output ontology that resulted from the merging of the three LargeBio ontologies. The merged class captures all knowledge (axioms and expressions) defining the three equivalent classes. It has a unique code (__Code\_1379__) as an abbreviated name, and all entities (existing in its description), that have been merged, also have their corresponding unique code as an abbreviated name. Besides, the merged class have three added labels (framed in red), which mention the original abbreviated names of the classes that have been merged. We attached each name to its ontology number (ID) to directly see from which ontology it originates.
 
+You view and download all our merged ontology from the [Results folder.](https://github.com/inesosman/AROM/tree/master/Results)
+
 
 ### Non Refactored Version
 
@@ -68,7 +70,7 @@ For the non customized version, axioms are exactly like the original ones.
 ![RefactoredMergedClass](https://github.com/inesosman/AROM/blob/master/Figures/RefactoredMergedClass.png)
 
 For the customized version, axioms are like the original ones, except that the IRIs of all mentioned entities are customized.
-You view and download this merged ontology from the [Results folder.](http://google.com)
+You view and download this merged ontology from the [Results folder.](https://github.com/inesosman/AROM/blob/master/Results/Merge_LargeBio_Refactored.owl)
 # Conclusion
 
 * Our final ontology is complete, in the sense that it retains all entities, axioms and hierarchies from the input ontologies.
