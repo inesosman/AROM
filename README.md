@@ -68,7 +68,7 @@ For the non customized version, axioms are exactly like the original ones.
 ![RefactoredMergedClass](https://github.com/inesosman/AROM/blob/master/Figures/RefactoredMergedClass.png)
 
 For the customized version, axioms are like the original ones, except that the IRIs of all mentioned entities are customized.
-
+You view and download this merged ontology from the [Results folder.](http://google.com)
 # Conclusion
 
 * Our final ontology is complete, in the sense that it retains all entities, axioms and hierarchies from the input ontologies.
