@@ -44,9 +44,7 @@ Here is the definition/description of __Head_Skin__ class in its original ontolo
 ![Head_Skin](https://github.com/inesosman/AROM/blob/master/Figures/NCI_Class.png)
 
 ### SNOMED
-We couldn't upload the whole SNOMED CT ontology, you can find it in the [OAEI](http://www.cs.ox.ac.uk/isg/projects/SEALS/oaei/) site.
-
-Here is the definition/description of __Skin_structure_of_head__ class in its original ontology (SNOMED (Ont3)) :
+We couldn't upload the whole SNOMED CT ontology, you can find it in the [OAEI](http://www.cs.ox.ac.uk/isg/projects/SEALS/oaei/) site. Here is the definition/description of __Skin_structure_of_head__ class in its original ontology (SNOMED (Ont3)) :
 
 ![Skin_structure_of_head](https://github.com/inesosman/AROM/blob/master/Figures/SNOMED_Class.png)
 
