@@ -39,13 +39,13 @@ Here is the definition/description of __Skin_of_head__ class in its original ont
 
 ### NCI
 
-Here is the definition/description of __Head_Skin__ class in its original ontology ([NCI](https://github.com/inesosman/AROM/blob/master/Data/NCI.owl (Ont2)) :
+Here is the definition/description of __Head_Skin__ class in its original ontology ([NCI](https://github.com/inesosman/AROM/blob/master/Data/NCI.owl) (Ont2)) :
 
 ![Head_Skin](https://github.com/inesosman/AROM/blob/master/Figures/NCI_Class.png)
 
 ### SNOMED
 
-Here is the definition/description of __Skin_structure_of_head__ class in its original ontology ([SNOMED](https://github.com/inesosman/AROM/blob/master/Data/SNOMED.owl (Ont3)) :
+Here is the definition/description of __Skin_structure_of_head__ class in its original ontology ([SNOMED](https://github.com/inesosman/AROM/blob/master/Data/SNOMED.owl) (Ont3)) :
 
 ![Skin_structure_of_head](https://github.com/inesosman/AROM/blob/master/Figures/SNOMED_Class.png)
 
