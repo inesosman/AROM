@@ -10,19 +10,19 @@ These are three equivalence correspondences from the "Large Biomedical Ontologie
 
 ### FMA-NCI
 
-The first correspondence (in [FMA-NCI](https://github.com/inesosman/AROM/blob/master/Data/FMA2NCI.rdf)) matches the __Skin_of_head__ class (from FMA) to the __Head_Skin__ class (from NCI):
+The first correspondence (in the [FMA-NCI alignment](https://github.com/inesosman/AROM/blob/master/Data/FMA2NCI.rdf)) matches the __Skin_of_head__ class (from FMA) to the __Head_Skin__ class (from NCI):
 
 ![FMA-NCI alignment](https://github.com/inesosman/AROM/blob/master/Figures/FMA-NCI.png)
 
 ### SNOMED-NCI
 
-The second correspondence (in [SNOMED-NCI](https://github.com/inesosman/AROM/blob/master/Data/SNOMED2NCI.rdf)) matches the __Skin_structure_of_head__ class (from SNOMED) to the __Head_Skin__ class (from NCI):
+The second correspondence (in the [SNOMED-NCI alignment](https://github.com/inesosman/AROM/blob/master/Data/SNOMED2NCI.rdf)) matches the __Skin_structure_of_head__ class (from SNOMED) to the __Head_Skin__ class (from NCI):
 
 ![SNOMED-NCI alignment](https://github.com/inesosman/AROM/blob/master/Figures/SNOMED-NCI.png)
 
 ### FMA-SNOMED
 
-The third correspondence (in [FMA-SNOMED](https://github.com/inesosman/AROM/blob/master/Data/FMA2SNOMED.rdf)) matches the __Skin_of_head__ class (from FMA) to the __Skin_structure_of_head__ class (rom SNOMED):
+The third correspondence (in the [FMA-SNOMED alignment](https://github.com/inesosman/AROM/blob/master/Data/FMA2SNOMED.rdf)) matches the __Skin_of_head__ class (from FMA) to the __Skin_structure_of_head__ class (from SNOMED):
 
 ![FMA-SNOMED alignment](https://github.com/inesosman/AROM/blob/master/Figures/FMA-SNOMED.png)
 
@@ -33,19 +33,19 @@ The third correspondence (in [FMA-SNOMED](https://github.com/inesosman/AROM/blob
 
 ### FMA
 
-Here is the definition/description of __Skin_of_head__ class in its original ontology (FMA (Ont1)) :
+Here is the definition/description of __Skin_of_head__ class in its original ontology ([FMA](https://github.com/inesosman/AROM/blob/master/Data/FMA.owl) (Ont1)) :
 
 ![Skin_of_head](https://github.com/inesosman/AROM/blob/master/Figures/FMA_Class.png)
 
 ### NCI
 
-Here is the definition/description of __Head_Skin__ class in its original ontology (NCI (Ont2)) :
+Here is the definition/description of __Head_Skin__ class in its original ontology ([NCI](https://github.com/inesosman/AROM/blob/master/Data/NCI.owl (Ont2)) :
 
 ![Head_Skin](https://github.com/inesosman/AROM/blob/master/Figures/NCI_Class.png)
 
 ### SNOMED
 
-Here is the definition/description of __Skin_structure_of_head__ class in its original ontology (SNOMED (Ont3)) :
+Here is the definition/description of __Skin_structure_of_head__ class in its original ontology ([SNOMED](https://github.com/inesosman/AROM/blob/master/Data/SNOMED.owl (Ont3)) :
 
 ![Skin_structure_of_head](https://github.com/inesosman/AROM/blob/master/Figures/SNOMED_Class.png)
 
