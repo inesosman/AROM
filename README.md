@@ -8,19 +8,19 @@ Let's merge the three ontologies of the **Large Biomedical Ontologies** OAEI tra
 
 These are three equivalence correspondences from the "Large Biomedical Ontologies" OAEI reference alignments.
 
-### * FMA-NCI
+### * FMA-NCI :
 
 The first correspondence (in [FMA-NCI](https://github.com/inesosman/AROM/blob/master/Data/FMA2NCI.rdf)) matches the __Skin_of_head__ class (from FMA) to the __Head_Skin__ class (from NCI):
 
 ![FMA-NCI alignment](https://github.com/inesosman/AROM/blob/master/Figures/FMA-NCI.png)
 
-### * SNOMED-NCI
+### * SNOMED-NCI :
 
 The second correspondence (in [SNOMED-NCI](https://github.com/inesosman/AROM/blob/master/Data/SNOMED2NCI.rdf)) matches the __Skin_structure_of_head__ class (from SNOMED) to the __Head_Skin__ class (from NCI):
 
 ![SNOMED-NCI alignment](https://github.com/inesosman/AROM/blob/master/Figures/SNOMED-NCI.png)
 
-### * FMA-SNOMED
+### * FMA-SNOMED :
 
 The third correspondence (in [FMA-SNOMED](https://github.com/inesosman/AROM/blob/master/Data/FMA2SNOMED.rdf)) matches the __Skin_of_head__ class (from FMA) to the __Skin_structure_of_head__ class (from SNOMED):
 
@@ -31,19 +31,19 @@ The third correspondence (in [FMA-SNOMED](https://github.com/inesosman/AROM/blob
 ## Input Ontologies
 
 
-### * FMA
+### * FMA :
 
 Here is the definition/description of __Skin_of_head__ class in its original ontology ([FMA](https://github.com/inesosman/AROM/blob/master/Data/FMA.owl) (Ont1)) :
 
 ![Skin_of_head](https://github.com/inesosman/AROM/blob/master/Figures/FMA_Class.png)
 
-### * NCI
+### * NCI :
 
 Here is the definition/description of __Head_Skin__ class in its original ontology ([NCI](https://github.com/inesosman/AROM/blob/master/Data/NCI.owl) (Ont2)) :
 
 ![Head_Skin](https://github.com/inesosman/AROM/blob/master/Figures/NCI_Class.png)
 
-### * SNOMED
+### * SNOMED :
 Here is the definition/description of __Skin_structure_of_head__ class in its original ontology ([SNOMED](https://github.com/inesosman/AROM/blob/master/Data/SNOMED3.owl) (Ont3)) :
 
 ![Skin_structure_of_head](https://github.com/inesosman/AROM/blob/master/Figures/SNOMED_Class.png)
@@ -58,14 +58,14 @@ The following figures show the merged class in our output ontology that resulted
 You can view and download all our merged ontologies from the [Results folder](https://github.com/inesosman/AROM/tree/master/Results).
 
 
-### * Non Refactored Version
+### * Non Refactored Version :
 
 ![MergedClass](https://github.com/inesosman/AROM/blob/master/Figures/MergedClass.png)
 
 For the non customized version, axioms are exactly like the original ones.
 You can download and view this [non refactored merged ontology](https://github.com/inesosman/AROM/blob/master/Results/Merge_LargeBio.owl) from the Results folder.
 
-### * Refactored Version
+### * Refactored Version :
 
 ![RefactoredMergedClass](https://github.com/inesosman/AROM/blob/master/Figures/RefactoredMergedClass.png)
 
