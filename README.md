@@ -63,14 +63,14 @@ You can view and download all our merged ontologies from the [Results folder.](h
 ![MergedClass](https://github.com/inesosman/AROM/blob/master/Figures/MergedClass.png)
 
 For the non customized version, axioms are exactly like the original ones.
-We could not upload this merged ontology because of its big size.
+You can view and download this [merged ontology](https://github.com/inesosman/AROM/blob/master/Results/Merge_LargeBio.owl) from the Results folder.
 
 ### Refactored Version
 
 ![RefactoredMergedClass](https://github.com/inesosman/AROM/blob/master/Figures/RefactoredMergedClass.png)
 
 For the customized version, axioms are like the original ones, except that the IRIs of all mentioned entities are customized.
-You can view and download this [merged ontology](https://github.com/inesosman/AROM/blob/master/Results/Merge_LargeBio_Refactored.owl) from the Results folder.
+You can view and download this [refactored merged ontology](https://github.com/inesosman/AROM/blob/master/Results/Merge_LargeBio_Refactored.owl) from the Results folder.
 # Conclusion
 
 * Our final ontology is complete, in the sense that it retains all entities, axioms and hierarchies from the input ontologies.
