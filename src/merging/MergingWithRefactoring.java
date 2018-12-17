@@ -119,7 +119,6 @@ public class MergingWithRefactoring {
 		ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
 		long chrono1 = bean.getCurrentThreadCpuTime();
 
-
 		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 		OWLDataFactory datafactory = manager.getOWLDataFactory();
 
@@ -132,7 +131,7 @@ public class MergingWithRefactoring {
 
 		/** Conference base */
 		ontologiesFiles.add("Data/cmt.owl");
-	    ontologiesFiles.add("Data/Conference.owl");
+	        ontologiesFiles.add("Data/Conference.owl");
 		ontologiesFiles.add("Data/confOf.owl");
 		ontologiesFiles.add("Data/edas.owl");
 		ontologiesFiles.add("Data/ekaw.owl");
@@ -1067,7 +1066,7 @@ public class MergingWithRefactoring {
 					String c = ch.substring((index + 1));
 
 					objectProp = df.getOWLObjectProperty(IRI.create(iri + number + "#" + c));
-					//objectProp = df.getOWLObjectProperty(IRI.create(iri + numéro + "#", objProperty.getIRI().getFragment()));
+					//objectProp = df.getOWLObjectProperty(IRI.create(iri + numÃ©ro + "#", objProperty.getIRI().getFragment()));
 					OWLDeclarationAxiom ax = df.getOWLDeclarationAxiom(objectProp);
 					axioms.add(ax);
 				}
