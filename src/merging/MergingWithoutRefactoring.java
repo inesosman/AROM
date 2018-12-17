@@ -142,9 +142,9 @@ public class MergingWithoutRefactoring {
 		//ontologiesFiles.add("Data/mouse.owl");
 
 		/** LargeBio base */
-		//ontologiesFiles.add("Data/FMA1.owl");   /** whole FMA */
-		//ontologiesFiles.add("Data/NCI1.owl");   /** whole NCI */
-		//ontologiesFiles.add("Data/SNOMED1.owl");   /** extended SNOMED */
+		//ontologiesFiles.add("Data/FMA3.owl");   /** whole FMA */
+		//ontologiesFiles.add("Data/NCI3.owl");   /** whole NCI */
+		//ontologiesFiles.add("Data/SNOMED3.owl");   /** extended SNOMED */
 
 
 		for(int g=0; g<ontologiesFiles.size(); g++){
