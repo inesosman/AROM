@@ -1,7 +1,7 @@
 # **AROM** (**A**lignments **R**euse for **O**ntology **M**erging)
 AROM is a novel approach for merging multiple ontologies using alignments. It automatically customizes and merges multiple large ontologies at a time in very short times.
 
-Let's merge the three ontologies of the **Large Biomedical Ontologies** OAEI track. We will merge them using reference alignments between all possible ontology pairs. This will ensure a complete semantic interoperability between them. All tests were performed with a confidence threshold equal to $0.0$, so we kept all correspondences / cells of the input alignments.
+Let's merge the three ontologies of the **Large Biomedical Ontologies** OAEI track. We will merge them using reference alignments between all possible ontology pairs. This will ensure a complete semantic interoperability between them. All tests were performed with a confidence threshold equal to 0.0, so we kept all correspondences / cells of the input alignments.
 
 
 # Input Alignments
