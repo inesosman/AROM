@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -18,12 +19,15 @@ import org.semanticweb.owl.align.AlignmentException;
 import org.semanticweb.owl.align.Cell;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
+import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationPropertyRangeAxiom;
+import org.semanticweb.owlapi.model.OWLAnnotationSubject;
+import org.semanticweb.owlapi.model.OWLAnnotationValue;
 import org.semanticweb.owlapi.model.OWLAnonymousIndividual;
 import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -62,6 +66,7 @@ import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLFacetRestriction;
 import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLFunctionalObjectPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLHasKeyAxiom;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLInverseFunctionalObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLInverseObjectPropertiesAxiom;
@@ -95,10 +100,12 @@ import org.semanticweb.owlapi.model.OWLSubAnnotationPropertyOfAxiom;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.model.OWLSubDataPropertyOfAxiom;
 import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
+import org.semanticweb.owlapi.model.OWLSubPropertyChainOfAxiom;
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLTransitiveObjectPropertyAxiom;
 
 import fr.inrialpes.exmo.align.parser.AlignmentParser;
+import uk.ac.manchester.cs.owl.owlapi.OWLSubPropertyChainAxiomImpl;
 
 
 public class MergingWithRefactoring {
@@ -125,7 +132,7 @@ public class MergingWithRefactoring {
 
 		/** Conference base */
 		ontologiesFiles.add("Data/cmt.owl");
-		ontologiesFiles.add("Data/Conference.owl");
+	    ontologiesFiles.add("Data/Conference.owl");
 		ontologiesFiles.add("Data/confOf.owl");
 		ontologiesFiles.add("Data/edas.owl");
 		ontologiesFiles.add("Data/ekaw.owl");
@@ -230,6 +237,9 @@ public class MergingWithRefactoring {
 			createAxiomsOfParsedDataProperties(hash_entitiesMergedNames, datafactory, ontology_n, mergedOntologyAxioms, mergedOntologyIRI, ontoCounter, dataProps);
 			createAxiomsOfParsedIndividuals(hash_entitiesMergedNames, datafactory, ontology_n, mergedOntologyAxioms, mergedOntologyIRI, ontoCounter, instances);
 
+			createAxiomsOfParsedSubPropertyChainOfAxioms(hash_entitiesMergedNames, datafactory, ontology_n, mergedOntologyAxioms, mergedOntologyIRI, ontoCounter);
+			//createAxiomsOfParsedHasKeyAxioms(hash_entitiesMergedNames, datafactory, ontology_n, mergedOntologyAxioms, mergedOntologyIRI, ontoCounter);
+
 			/** these three following methods can be commented, because alignments don't map annotation Properties,
 			 * Data Types, or anonymous individuals. We just put them to preserve all ontologies knowledge (axioms).
 			 */
@@ -285,7 +295,6 @@ public class MergingWithRefactoring {
 		System.clearProperty("jdk.xml.entityExpansionLimit");
 
 	}
-
 
 
 	public static int getMergedNamesForEquivalentEntitiesUsingOriginalAlignments(String alignmentFile, double threshold, HashMap<String, String> hash1, HashMap<String, HashSet<String>> hash2, int k) throws AlignmentException{
@@ -545,12 +554,10 @@ public class MergingWithRefactoring {
 
 				number = entityID(ontologyNumber);
 
-				extractAndCreateClassLabels(axioms, clsA, cls, ont, df);
-				extractAndCreateClassComments(axioms, clsA, cls, ont, df);
+				extractAndCreateClassAnnotations(clsA, axioms, df, cls, ont); //labels, comments, and non built-in annotations
 				extractAndCreateSuperClassesOfClass(mergedEntitiesNewNames, iri, number, axioms, clsA, df, ont, cls);
 				extractAndCreateEquivalentClassesOfClass(mergedEntitiesNewNames, iri, number, df, clsA, axioms, cls, ont);
 				extractAndCreateDisjointClassesOfClass(mergedEntitiesNewNames, clsA, axioms, iri, number, df, cls, ont);
-				extractAndCreateNonBuiltInClassAnnotations(clsA, axioms, df, cls, ont);
 
 				//} else {
 				//OWLClass clsA = df.getOWLThing();
@@ -588,69 +595,17 @@ public class MergingWithRefactoring {
 		return ontologyNumber;
 	}
 
+	public static void extractAndCreateClassAnnotations(OWLClass cls, Set<OWLAxiom> axioms, OWLDataFactory datafact, OWLClass concept, OWLOntology ont) {
 
-	public static void extractAndCreateClassLabels(Set<OWLAxiom> axioms, OWLClass cls, OWLClass concept, OWLOntology ont,
-			OWLDataFactory datafact) {
+		for (OWLAnnotation annotation : concept.getAnnotations(ont)) {
 
-		for (OWLAnnotation annotation : concept.getAnnotations(ont, datafact.getRDFSLabel())) {
-			if (annotation.getValue() instanceof OWLLiteral) {
-				OWLLiteral val = (OWLLiteral) annotation.getValue();
-				OWLAnnotation anno;
+			OWLAnnotationProperty prop = annotation.getProperty();
+			OWLAnnotationValue value = annotation.getValue();
 
-				if (val.hasLang()) {
-					anno = datafact.getOWLAnnotation(datafact.getRDFSLabel(),
-							datafact.getOWLLiteral(val.getLiteral(), val.getLang()));
-				} else {
-					anno = datafact.getOWLAnnotation(datafact.getRDFSLabel(),
-							datafact.getOWLLiteral(val.getLiteral(), val.getDatatype()));
-				}
-
-				OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(cls.getIRI(), anno);
-				axioms.add(ax);
-			}
-			else{
-				if (annotation.getValue() instanceof IRI) {
-					IRI val = (IRI) annotation.getValue();
-					OWLAnnotation anno = datafact.getOWLAnnotation(datafact.getRDFSLabel(), val);
-
-					OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(cls.getIRI(), anno);
-					axioms.add(ax);
-				}
-			}
+			OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(prop, cls.getIRI(), value);
+			axioms.add(ax);
 		}
 	}
-
-
-	public static void extractAndCreateClassComments(Set<OWLAxiom> axioms, OWLClass cls, OWLClass concept, OWLOntology ont,
-			OWLDataFactory datafact) {
-
-		for (OWLAnnotation annot : concept.getAnnotations(ont, datafact.getRDFSComment())) {
-			if (annot.getValue() instanceof OWLLiteral) {
-				OWLLiteral val = (OWLLiteral) annot.getValue();
-				OWLAnnotation annotation;
-
-				if (val.hasLang()) {
-					annotation = datafact.getOWLAnnotation(datafact.getRDFSComment(),
-							datafact.getOWLLiteral(val.getLiteral(), val.getLang()));
-				} else {
-					annotation = datafact.getOWLAnnotation(datafact.getRDFSComment(),
-							datafact.getOWLLiteral(val.getLiteral(), val.getDatatype()));
-				}
-				OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(cls.getIRI(), annotation);
-				axioms.add(ax);
-			}
-			else{
-				if (annot.getValue() instanceof IRI) {
-					IRI val = (IRI) annot.getValue();
-					OWLAnnotation annotation = datafact.getOWLAnnotation(datafact.getRDFSComment(), val);
-
-					OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(cls.getIRI(), annotation);
-					axioms.add(ax);
-				}
-			}
-		}
-	}
-
 
 	public static void extractAndCreateSuperClassesOfClass(HashMap<String, String> mergedEntitiesNewNames, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLClass cls, OWLDataFactory df, OWLOntology ont,
 			OWLClass concept) {
@@ -1056,7 +1011,6 @@ public class MergingWithRefactoring {
 			owlDataRangeRestriction = df.getOWLDatatypeRestriction(dataType, set);
 		}
 
-
 		return owlDataRangeRestriction;
 	}
 
@@ -1074,7 +1028,6 @@ public class MergingWithRefactoring {
 		}
 	}
 
-
 	public static void extractAndCreateDisjointClassesOfClass(HashMap<String, String> mergedEntitiesNewNames, OWLClass cls, Set<OWLAxiom> axioms, String iri, String ontologyNumber, OWLDataFactory df, OWLClass concept, OWLOntology ont) {
 
 		for (OWLClassExpression disj : concept.getDisjointClasses(ont)) {
@@ -1086,23 +1039,6 @@ public class MergingWithRefactoring {
 			axioms.add(axiom);
 		}
 	}
-
-
-	public static void extractAndCreateNonBuiltInClassAnnotations(OWLClass clsA, Set<OWLAxiom> axioms, OWLDataFactory datafact, OWLClass concept,
-			OWLOntology ont) {
-
-		for (OWLAnnotation anno : concept.getAnnotations(ont)) {
-
-			if (!anno.getProperty().isBuiltIn()) {
-				OWLAnnotationProperty annotationProp = datafact.getOWLAnnotationProperty(anno.getProperty().getIRI());
-				OWLAnnotation annotation = datafact.getOWLAnnotation(annotationProp, anno.getValue());
-
-				OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(clsA.getIRI(), annotation);
-				axioms.add(ax);
-			}
-		}
-	}
-
 
 	public static void createAxiomsOfParsedObjectProperties(HashMap<String, String> mergedEntitiesNewNames, OWLDataFactory df, OWLOntology ont, Set<OWLAxiom> axioms, String iri, String ontologyNumber, HashMap<String, String> hashObjProp) throws OWLException{
 
@@ -1138,8 +1074,7 @@ public class MergingWithRefactoring {
 
 				number = entityID(ontologyNumber);
 
-				extractAndCreateObjectPropertyLabels(axioms, objectProp, ont, df, objProperty);
-				extractAndCreateObjectPropertyComments(axioms, objectProp, ont, df, objProperty);
+				extractAndCreateObjectPropertyAnnotations(axioms, objectProp, ont, df, objProperty);  //labels, comments, and non built-in annotations
 				extractAndCreateObjectPropertyDomains(mergedEntitiesNewNames, objectProp, iri, number, axioms, df, ont, objProperty);
 				extractAndCreateObjectPropertyRanges(mergedEntitiesNewNames, objectProp, iri, number, axioms, df, ont, objProperty);
 				extractAndCreateObjectPropertyTypes(objectProp, axioms, df, ont, objProperty);
@@ -1147,7 +1082,6 @@ public class MergingWithRefactoring {
 				extractAndCreateInversePropertiesOfObjectProperty(mergedEntitiesNewNames, iri, number, axioms, objectProp, df, ont, objProperty);
 				extractAndCreateDisjointPropertiesOfObjectProperty(mergedEntitiesNewNames, iri, number, axioms, objectProp, df, ont, objProperty);
 				extractAndCreateEquivalentPropertiesOfObjectProperty(mergedEntitiesNewNames, iri, number, axioms, objectProp, df, ont, objProperty);
-				extractAndCreateNonBuiltInObjectPropertyAnnotations(objectProp, axioms, df, objProperty, ont);
 
 				//} else {
 				//OWLObjectProperty objectProp = df.getOWLTopObjectProperty();
@@ -1158,71 +1092,18 @@ public class MergingWithRefactoring {
 		}
 	}
 
-
-	public static void extractAndCreateObjectPropertyLabels(Set<OWLAxiom> axioms, OWLObjectProperty objProp, OWLOntology ont,
+	public static void extractAndCreateObjectPropertyAnnotations(Set<OWLAxiom> axioms, OWLObjectProperty objProp, OWLOntology ont,
 			OWLDataFactory datafact, OWLObjectProperty objectProp) {
 
-		for (OWLAnnotation annotation : objectProp.getAnnotations(ont, datafact.getRDFSLabel())) {
-			if (annotation.getValue() instanceof OWLLiteral) {
-				OWLLiteral val = (OWLLiteral) annotation.getValue();
-				OWLAnnotation anno;
+		for (OWLAnnotation annotation : objectProp.getAnnotations(ont)) {
 
-				if (val.hasLang()) {
-					anno = datafact.getOWLAnnotation(datafact.getRDFSLabel(),
-							datafact.getOWLLiteral(val.getLiteral(), val.getLang()));
-				} else {
-					anno = datafact.getOWLAnnotation(datafact.getRDFSLabel(),
-							datafact.getOWLLiteral(val.getLiteral(), val.getDatatype()));
-				}
+			OWLAnnotationProperty prop = annotation.getProperty();
+			OWLAnnotationValue value = annotation.getValue();
 
-				OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(objProp.getIRI(), anno);
-				axioms.add(ax);
-			}
-			else{
-				if (annotation.getValue() instanceof IRI) {
-					IRI val = (IRI) annotation.getValue();
-					OWLAnnotation anno = datafact.getOWLAnnotation(datafact.getRDFSLabel(), val);
-
-					OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(objProp.getIRI(), anno);
-					axioms.add(ax);
-				}
-			}
+			OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(prop, objProp.getIRI(), value);
+			axioms.add(ax);
 		}
 	}
-
-
-	public static void extractAndCreateObjectPropertyComments(Set<OWLAxiom> axioms, OWLObjectProperty objProp, OWLOntology ont, OWLDataFactory datafact, OWLObjectProperty obj) {
-
-		for (OWLAnnotation annot : obj.getAnnotations(ont, datafact.getRDFSComment())) {
-			if (annot.getValue() instanceof OWLLiteral) {
-
-				OWLLiteral val = (OWLLiteral) annot.getValue();
-				OWLAnnotation annotation;
-
-				if (val.hasLang()) {
-					annotation = datafact.getOWLAnnotation(datafact.getRDFSComment(),
-							datafact.getOWLLiteral(val.getLiteral(), val.getLang()));
-				} else {
-					annotation = datafact.getOWLAnnotation(datafact.getRDFSComment(),
-							datafact.getOWLLiteral(val.getLiteral(), val.getDatatype()));
-				}
-
-				OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(objProp.getIRI(), annotation);
-				axioms.add(ax);
-			}
-			else{
-				if (annot.getValue() instanceof IRI) {
-
-					IRI val = (IRI) annot.getValue();
-					OWLAnnotation annotation = datafact.getOWLAnnotation(datafact.getRDFSComment(), val);
-
-					OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(objProp.getIRI(), annotation);
-					axioms.add(ax);
-				}
-			}
-		}
-	}
-
 
 	public static void extractAndCreateObjectPropertyDomains(HashMap<String, String> mergedEntitiesNewNames, OWLObjectProperty objProp, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLDataFactory df, OWLOntology ont,
 			OWLObjectProperty obj) {
@@ -1236,7 +1117,6 @@ public class MergingWithRefactoring {
 			axioms.add(ax);				
 		}
 	}
-
 
 	public static void extractAndCreateObjectPropertyRanges(HashMap<String, String> mergedEntitiesNewNames, OWLObjectProperty objProp, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLDataFactory df, OWLOntology ont,
 			OWLObjectProperty obj) {
@@ -1306,7 +1186,6 @@ public class MergingWithRefactoring {
 		}
 	}
 
-
 	public static void extractAndCreateInversePropertiesOfObjectProperty(HashMap<String, String> mergedEntitiesNewNames, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLObjectProperty objProp, OWLDataFactory df, OWLOntology ont,
 			OWLObjectProperty obj) {
 
@@ -1319,7 +1198,6 @@ public class MergingWithRefactoring {
 			axioms.add(ax);			
 		}
 	}
-
 
 	public static void extractAndCreateDisjointPropertiesOfObjectProperty(HashMap<String, String> mergedEntitiesNewNames, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLObjectProperty objProp, OWLDataFactory df, OWLOntology ont,
 			OWLObjectProperty prop) {
@@ -1345,22 +1223,6 @@ public class MergingWithRefactoring {
 
 			OWLEquivalentObjectPropertiesAxiom invAx = df.getOWLEquivalentObjectPropertiesAxiom(oProp, expression);
 			axioms.add(invAx);
-		}
-	}
-
-
-	public static void extractAndCreateNonBuiltInObjectPropertyAnnotations(OWLObjectProperty objProp, Set<OWLAxiom> axioms, OWLDataFactory datafact,
-			OWLObjectProperty prop, OWLOntology ont) {
-
-		for (OWLAnnotation annotation : prop.getAnnotations(ont)) {
-
-			if (!annotation.getProperty().isBuiltIn()) {
-				OWLAnnotationProperty annotationProp = datafact.getOWLAnnotationProperty(annotation.getProperty().getIRI());
-				OWLAnnotation anno = datafact.getOWLAnnotation(annotationProp, annotation.getValue());
-
-				OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(objProp.getIRI(), anno);
-				axioms.add(ax);
-			}
 		}
 	}
 
@@ -1399,15 +1261,13 @@ public class MergingWithRefactoring {
 
 				number = entityID(ontologyNumber);
 
-				extractAndCreateDataPropertyLabels(dProp, axioms, dataProperty, ont, df);
-				extractAndCreateDataPropertyComments(dProp, axioms, dataProperty, ont, df);
+				extractAndCreateDataPropertyAnnotations(dProp, axioms, dataProperty, ont, df);  //labels, comments, and non built-in annotations
 				extractAndCreateDataPropertyDomains(mergedEntitiesNewNames, dProp, iri, number, axioms, df, dataProperty, ont);
 				extractAndCreateDataPropertyRanges(dProp, iri, axioms, df, dataProperty, ont);
 				extractAndCreateDataPropertyTypes(dProp, axioms, df, dataProperty, ont);
 				extractAndCreateSuperPropertiesOfDataProperty(mergedEntitiesNewNames, dProp, iri, number, axioms, df, dataProperty, ont);
 				extractAndCreateEquivalentPropertiesOfDataProperty(mergedEntitiesNewNames, dProp, iri, number, axioms, df, dataProperty, ont);
 				extractAndCreateDisjointPropertiesOfDataProperty(mergedEntitiesNewNames, dProp, iri, number, axioms, df, dataProperty, ont);
-				extractAndCreateNonBuiltInDataPropertyAnnotations(dProp, axioms, df, dataProperty, ont);
 
 				//} else {
 				//OWLDataProperty dProp = df.getOWLTopDataProperty();
@@ -1418,70 +1278,18 @@ public class MergingWithRefactoring {
 		}
 	}
 
-
-	public static void extractAndCreateDataPropertyLabels(OWLDataProperty dataProp, Set<OWLAxiom> axioms, OWLDataProperty dataProperty,
+	public static void extractAndCreateDataPropertyAnnotations(OWLDataProperty dataProp, Set<OWLAxiom> axioms, OWLDataProperty dataProperty,
 			OWLOntology ont, OWLDataFactory df) {
 
-		for (OWLAnnotation annotation : dataProperty.getAnnotations(ont, df.getRDFSLabel())) {
-			if (annotation.getValue() instanceof OWLLiteral) {
-				OWLLiteral val = (OWLLiteral) annotation.getValue();
-				OWLAnnotation anno;
+		for (OWLAnnotation annotation : dataProperty.getAnnotations(ont)) {
 
-				if (val.hasLang()) {
-					anno = df.getOWLAnnotation(df.getRDFSLabel(),
-							df.getOWLLiteral(val.getLiteral(), val.getLang()));
-				} else {
-					anno = df.getOWLAnnotation(df.getRDFSLabel(),
-							df.getOWLLiteral(val.getLiteral(), val.getDatatype()));
-				}
+			OWLAnnotationProperty prop = annotation.getProperty();
+			OWLAnnotationValue value = annotation.getValue();
 
-				OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(dataProp.getIRI(), anno);
-				axioms.add(ax);
-			}
-			else{
-				if (annotation.getValue() instanceof IRI) {
-					IRI val = (IRI) annotation.getValue();
-					OWLAnnotation anno = df.getOWLAnnotation(df.getRDFSLabel(), val);
-
-					OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(dataProp.getIRI(), anno);
-					axioms.add(ax);
-				}
-			}
+			OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(prop, dataProp.getIRI(), value);
+			axioms.add(ax);
 		}
 	}
-
-
-	public static void extractAndCreateDataPropertyComments(OWLDataProperty dataProp, Set<OWLAxiom> axioms, OWLDataProperty dataProperty, OWLOntology ont, OWLDataFactory df) {
-
-		for (OWLAnnotation annotation : dataProperty.getAnnotations(ont, df.getRDFSComment())) {
-
-			if (annotation.getValue() instanceof OWLLiteral) {
-				OWLLiteral val = (OWLLiteral) annotation.getValue();
-				OWLAnnotation anno;
-
-				if (val.hasLang()) {
-					anno = df.getOWLAnnotation(df.getRDFSComment(),
-							df.getOWLLiteral(val.getLiteral(), val.getLang()));
-				} else {
-					anno = df.getOWLAnnotation(df.getRDFSComment(),
-							df.getOWLLiteral(val.getLiteral(), val.getDatatype()));
-				}
-
-				OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(dataProp.getIRI(), anno);
-				axioms.add(ax);
-			}
-			else{
-				if (annotation.getValue() instanceof IRI) {
-					IRI val = (IRI) annotation.getValue();
-					OWLAnnotation anno = df.getOWLAnnotation(df.getRDFSComment(), val);
-
-					OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(dataProp.getIRI(), anno);
-					axioms.add(ax);
-				}
-			}
-		}
-	}
-
 
 	public static void extractAndCreateDataPropertyDomains(HashMap<String, String> mergedEntitiesNewNames, OWLDataProperty dataProp, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLDataFactory df, OWLDataProperty dataProperty, OWLOntology ont) {
 
@@ -1495,7 +1303,6 @@ public class MergingWithRefactoring {
 		}
 	}
 
-
 	public static void extractAndCreateDataPropertyRanges(OWLDataProperty dataProp, String iri, Set<OWLAxiom> axioms, OWLDataFactory df, OWLDataProperty dataProperty, OWLOntology ont) {
 
 		for (OWLDataRange range : dataProperty.getRanges(ont)) {
@@ -1507,7 +1314,6 @@ public class MergingWithRefactoring {
 		}
 	}
 
-
 	public static void extractAndCreateDataPropertyTypes(OWLDataProperty dataProp, Set<OWLAxiom> axioms, OWLDataFactory df, OWLDataProperty dataProperty, OWLOntology ont) {
 
 		if (dataProperty.isFunctional(ont)) {
@@ -1515,7 +1321,6 @@ public class MergingWithRefactoring {
 			axioms.add(typeAx);
 		}
 	}
-
 
 	public static void extractAndCreateSuperPropertiesOfDataProperty(HashMap<String, String> mergedEntitiesNewNames, OWLDataProperty dataProp, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLDataFactory df, OWLDataProperty dProp, OWLOntology ont) {
 
@@ -1529,7 +1334,6 @@ public class MergingWithRefactoring {
 		}
 	}
 
-
 	public static void extractAndCreateEquivalentPropertiesOfDataProperty(HashMap<String, String> mergedEntitiesNewNames, OWLDataProperty dataProp, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLDataFactory df, OWLDataProperty dProp, OWLOntology ont) {
 
 		for (OWLDataPropertyExpression equiv : dProp.getEquivalentProperties(ont)) {
@@ -1542,7 +1346,6 @@ public class MergingWithRefactoring {
 		}
 	}
 
-
 	public static void extractAndCreateDisjointPropertiesOfDataProperty(HashMap<String, String> mergedEntitiesNewNames, OWLDataProperty dataProp, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLDataFactory df, OWLDataProperty dProp, OWLOntology ont) {
 
 		for (OWLDataPropertyExpression disjProp : dProp.getDisjointProperties(ont)) {
@@ -1554,22 +1357,6 @@ public class MergingWithRefactoring {
 			axioms.add(disjAx);
 		}
 	}
-
-
-	public static void extractAndCreateNonBuiltInDataPropertyAnnotations(OWLDataProperty prop_d, Set<OWLAxiom> axioms, OWLDataFactory datafact,
-			OWLDataProperty prop, OWLOntology ont) {
-
-		for (OWLAnnotation annotation : prop.getAnnotations(ont)) {
-			if (!annotation.getProperty().isBuiltIn()) {
-				OWLAnnotationProperty annotationProp = datafact.getOWLAnnotationProperty(annotation.getProperty().getIRI());
-				OWLAnnotation anno = datafact.getOWLAnnotation(annotationProp, annotation.getValue());
-
-				OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(prop_d.getIRI(), anno);
-				axioms.add(ax);
-			}
-		}
-	}
-
 
 	public static void createAxiomsOfParsedIndividuals(HashMap<String, String> mergedEntitiesNewNames, OWLDataFactory df, OWLOntology ont, Set<OWLAxiom> axioms, String iri, String ontologyNumber, HashMap<String, String> hInstances) throws OWLException{
 
@@ -1604,8 +1391,7 @@ public class MergingWithRefactoring {
 
 			number = entityID(ontologyNumber);
 
-			extractAndCreateIndividualLabels(instance, axioms, individual, ont, df);
-			extractAndCreateIndividualComments(instance, axioms, individual, ont, df);
+			extractAndCreateIndividualAnnotations(instance, axioms, individual, ont, df);   //labels, comments, and non built-in annotations
 			extractAndCreateSameAsIndividualsOfIndividual(mergedEntitiesNewNames, instance, iri, number, axioms, df, individual, ont);
 			extractAndCreateDifferentIndividualsOfIndividual(mergedEntitiesNewNames, axioms, instance, iri, number, df, individual, ont); 
 			extractAndCreateClassAssertions(mergedEntitiesNewNames, instance, iri, number, axioms, df, individual, ont);
@@ -1613,89 +1399,21 @@ public class MergingWithRefactoring {
 			extractAndCreateNegativeObjectPropertyAssertionsOfIndividual(mergedEntitiesNewNames, instance, iri, number, axioms, df, individual, ont); 
 			extractAndCreateDataPropertyAssertionsOfIndividual(mergedEntitiesNewNames, instance, iri, number, axioms, df, individual, ont);
 			extractAndCreateNegativeDataPropertyAssertionsOfIndividual(mergedEntitiesNewNames, instance, iri, number, axioms, df, individual, ont);
-			extractAndCreateNonBuiltInIndividualAnnotations(instance, axioms, df, individual, ont);
 		}
 	}
 
-
-	public static void extractAndCreateClassAssertions(HashMap<String, String> mergedEntitiesNewNames, OWLNamedIndividual instance, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLDataFactory df, OWLNamedIndividual individual, OWLOntology ont) {
-
-		for (OWLClassAssertionAxiom assertion : ont.getClassAssertionAxioms(individual)) {
-			String number = ontologyNumber;
-
-			for (OWLClass concept : assertion.getClassesInSignature()) {
-
-				OWLClassExpression clsExpression = getClassExpressions(concept, df, mergedEntitiesNewNames, iri, number);
-
-				OWLClassAssertionAxiom classAssertion = df.getOWLClassAssertionAxiom(clsExpression, instance);
-				axioms.add(classAssertion);
-			}
-		}
-	}
-
-	public static void extractAndCreateIndividualLabels(OWLNamedIndividual instance, Set<OWLAxiom> axioms, OWLNamedIndividual individual, OWLOntology ont,
+	public static void extractAndCreateIndividualAnnotations(OWLNamedIndividual instance, Set<OWLAxiom> axioms, OWLNamedIndividual individual, OWLOntology ont,
 			OWLDataFactory df) {
 
-		for (OWLAnnotation annotation : individual.getAnnotations(ont, df.getRDFSLabel())) {
-			if (annotation.getValue() instanceof OWLLiteral) {
-				OWLLiteral val = (OWLLiteral) annotation.getValue();
-				OWLAnnotation anno;
+		for (OWLAnnotation annotation : individual.getAnnotations(ont)) {
 
-				if (val.hasLang()) {
-					anno = df.getOWLAnnotation(df.getRDFSLabel(),
-							df.getOWLLiteral(val.getLiteral(), val.getLang()));
-				} else {
-					anno = df.getOWLAnnotation(df.getRDFSLabel(),
-							df.getOWLLiteral(val.getLiteral(), val.getDatatype()));
-				}
+			OWLAnnotationProperty prop = annotation.getProperty();
+			OWLAnnotationValue value = annotation.getValue();
 
-				OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(instance.getIRI(), anno);
-				axioms.add(ax);
-			}
-			else{
-				if (annotation.getValue() instanceof IRI) {
-					IRI val = (IRI) annotation.getValue();
-					OWLAnnotation anno = df.getOWLAnnotation(df.getRDFSLabel(), val);
-
-					OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(instance.getIRI(), anno);
-					axioms.add(ax);
-				}
-			}
+			OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(prop, instance.getIRI(), value);
+			axioms.add(ax);
 		}
 	}
-
-
-	public static void extractAndCreateIndividualComments(OWLNamedIndividual instance, Set<OWLAxiom> axioms, OWLNamedIndividual individual, OWLOntology ont,
-			OWLDataFactory df) {
-
-		for (OWLAnnotation annotation : individual.getAnnotations(ont, df.getRDFSComment())) {
-			if (annotation.getValue() instanceof OWLLiteral) {
-				OWLLiteral val = (OWLLiteral) annotation.getValue();
-				OWLAnnotation anno;
-
-				if (val.hasLang()) {
-					anno = df.getOWLAnnotation(df.getRDFSComment(),
-							df.getOWLLiteral(val.getLiteral(), val.getLang()));
-				} else {
-					anno = df.getOWLAnnotation(df.getRDFSComment(),
-							df.getOWLLiteral(val.getLiteral(), val.getDatatype()));
-				}
-
-				OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(instance.getIRI(), anno);
-				axioms.add(ax);
-			}
-			else{
-				if (annotation.getValue() instanceof IRI) {
-					IRI val = (IRI) annotation.getValue();
-					OWLAnnotation anno = df.getOWLAnnotation(df.getRDFSComment(), val);
-
-					OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(instance.getIRI(), anno);
-					axioms.add(ax);
-				}
-			}
-		}
-	}
-
 
 	public static void extractAndCreateSameAsIndividualsOfIndividual(HashMap<String, String> mergedEntitiesNewNames, OWLNamedIndividual instance, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLDataFactory df, OWLNamedIndividual individual, OWLOntology ont) {
 
@@ -1708,7 +1426,6 @@ public class MergingWithRefactoring {
 			axioms.add(sameInds);
 		}
 	}
-
 
 	public static void extractAndCreateDifferentIndividualsOfIndividual(HashMap<String, String> mergedEntitiesNewNames, Set<OWLAxiom> axioms, OWLNamedIndividual instance, String iri, String ontologyNumber, OWLDataFactory datafactory, OWLNamedIndividual ind, OWLOntology ont) {
 
@@ -1727,6 +1444,20 @@ public class MergingWithRefactoring {
 		}
 	}
 
+	public static void extractAndCreateClassAssertions(HashMap<String, String> mergedEntitiesNewNames, OWLNamedIndividual instance, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLDataFactory df, OWLNamedIndividual individual, OWLOntology ont) {
+
+		for (OWLClassAssertionAxiom assertion : ont.getClassAssertionAxioms(individual)) {
+			String number = ontologyNumber;
+
+			for (OWLClass concept : assertion.getClassesInSignature()) {
+
+				OWLClassExpression clsExpression = getClassExpressions(concept, df, mergedEntitiesNewNames, iri, number);
+
+				OWLClassAssertionAxiom classAssertion = df.getOWLClassAssertionAxiom(clsExpression, instance);
+				axioms.add(classAssertion);
+			}
+		}
+	}
 
 	public static void extractAndCreateObjectPropertyAssertionsOfIndividual(HashMap<String, String> mergedEntitiesNewNames, OWLNamedIndividual instance, String iri, String ontologyNumber, Set<OWLAxiom> axioms, OWLDataFactory df,
 			OWLNamedIndividual individ, OWLOntology ont) {
@@ -1808,17 +1539,61 @@ public class MergingWithRefactoring {
 		}
 	}
 
-	public static void extractAndCreateNonBuiltInIndividualAnnotations(OWLNamedIndividual instance, Set<OWLAxiom> axioms, OWLDataFactory datafact,
-			OWLNamedIndividual individual, OWLOntology ont) {
+	public static void createAxiomsOfParsedSubPropertyChainOfAxioms(HashMap<String, String> mergedEntitiesNewNames, OWLDataFactory datafactory, OWLOntology ontology_n, Set<OWLAxiom> axioms, String iri, String ontNum){
 
-		for (OWLAnnotation annotation : individual.getAnnotations(ont)) {
+		Set<OWLSubPropertyChainOfAxiom> set = ontology_n.getAxioms(AxiomType.SUB_PROPERTY_CHAIN_OF);
+		for(OWLSubPropertyChainOfAxiom chain : set){
 
-			if (!annotation.getProperty().isBuiltIn()) {
-				OWLAnnotationProperty annotationProp = datafact.getOWLAnnotationProperty(annotation.getProperty().getIRI());
-				OWLAnnotation annoo = datafact.getOWLAnnotation(annotationProp, annotation.getValue());
+			List<OWLObjectPropertyExpression> list = chain.getPropertyChain();
+			OWLObjectPropertyExpression supObjProp = chain.getSuperProperty();
 
-				OWLAnnotationAssertionAxiom ax = datafact.getOWLAnnotationAssertionAxiom(instance.getIRI(), annoo);
+			List<OWLObjectPropertyExpression> modifiedList = new ArrayList<OWLObjectPropertyExpression>();
+			for(OWLObjectPropertyExpression obExp : list){
+				modifiedList.add(getObjectPropertyExpressions(obExp, datafactory, mergedEntitiesNewNames, iri, entityID(ontNum)));
+			}
+
+			if(chain.isAnnotated()){
+				Set<OWLAnnotation> annotation = chain.getAnnotations();
+				OWLSubPropertyChainOfAxiom ax = datafactory.getOWLSubPropertyChainOfAxiom(modifiedList, getObjectPropertyExpressions(supObjProp, datafactory, mergedEntitiesNewNames, iri, entityID(ontNum)), annotation);
 				axioms.add(ax);
+			}else{
+				OWLSubPropertyChainOfAxiom ax = datafactory.getOWLSubPropertyChainOfAxiom(modifiedList, getObjectPropertyExpressions(supObjProp, datafactory, mergedEntitiesNewNames, iri, entityID(ontNum)));
+				axioms.add(ax);
+			}			
+		}	
+	}
+
+	public static void createAxiomsOfParsedHasKeyAxioms(HashMap<String, String> mergedEntitiesNewNames, OWLDataFactory datafactory, OWLOntology ontology_n, Set<OWLAxiom> axioms, String iri, String ontNum){
+
+		Set<OWLHasKeyAxiom> setKey = ontology_n.getAxioms(AxiomType.HAS_KEY);
+		for(OWLHasKeyAxiom key : setKey){
+
+			OWLClassExpression clsExp = key.getClassExpression();
+			OWLClassExpression ModifiedClsExp = getClassExpressions(clsExp, datafactory, mergedEntitiesNewNames, iri, entityID(ontNum));
+			Set<OWLObjectPropertyExpression> objExpSet = key.getObjectPropertyExpressions();
+			Set<OWLDataPropertyExpression> dataExpSet = key.getDataPropertyExpressions();
+
+
+			Set<OWLObjectPropertyExpression> modifiedObjExpSet = new HashSet<OWLObjectPropertyExpression>();
+			for(OWLObjectPropertyExpression objExp : objExpSet){
+				modifiedObjExpSet.add(getObjectPropertyExpressions(objExp, datafactory, mergedEntitiesNewNames, iri, entityID(ontNum)));
+			}
+			Set<OWLDataPropertyExpression> modifiedDataExpSet = new HashSet<OWLDataPropertyExpression>();
+			for(OWLDataPropertyExpression dataExp : dataExpSet){
+				modifiedDataExpSet.add(getDataPropertyExpressions(dataExp, datafactory, mergedEntitiesNewNames, iri, entityID(ontNum)));
+			}
+
+			if(!key.isAnnotated()){
+				OWLHasKeyAxiom haskey = datafactory.getOWLHasKeyAxiom(ModifiedClsExp, modifiedObjExpSet);
+				OWLHasKeyAxiom haskeyy = datafactory.getOWLHasKeyAxiom(ModifiedClsExp, modifiedDataExpSet);
+				axioms.add(haskey);
+				axioms.add(haskeyy);
+			}else{
+				Set<OWLAnnotation> annotations = key.getAnnotations();
+				OWLHasKeyAxiom haskey = datafactory.getOWLHasKeyAxiom(ModifiedClsExp, modifiedObjExpSet, annotations);
+				OWLHasKeyAxiom haskeyy = datafactory.getOWLHasKeyAxiom(ModifiedClsExp, modifiedDataExpSet, annotations);
+				axioms.add(haskey);
+				axioms.add(haskeyy);
 			}
 		}
 	}
@@ -1831,8 +1606,7 @@ public class MergingWithRefactoring {
 				OWLDeclarationAxiom ax = df.getOWLDeclarationAxiom(annoProp);
 				axioms.add(ax);
 
-				extractAndCreateAnnotationPropertyLabels(annoProp, axioms, ont, df);
-				extractAndCreateAnnotationPropertyComments(annoProp, axioms, ont, df);
+				extractAndCreateAnnotationPropertyAnnotations(annoProp, axioms, ont, df);
 				extractAndCreateSuperPropertiesOfAnnotationProperty(annoProp, axioms, df, ont);
 				extractAndCreateAnnotationPropertyDomains(annoProp, axioms, df, ont);
 				extractAndCreateAnnotationPropertyRanges(annoProp, axioms, df, ont);
@@ -1840,69 +1614,19 @@ public class MergingWithRefactoring {
 		}
 	}
 
-	public static void extractAndCreateAnnotationPropertyLabels(OWLAnnotationProperty prop, Set<OWLAxiom> axioms, OWLOntology ont,
+	public static void extractAndCreateAnnotationPropertyAnnotations(OWLAnnotationProperty prop, Set<OWLAxiom> axioms, OWLOntology ont,
 			OWLDataFactory df) {
 
-		for (OWLAnnotation annotation : prop.getAnnotations(ont, df.getRDFSLabel())) {
-			if (annotation.getValue() instanceof OWLLiteral) {
-				OWLLiteral val = (OWLLiteral) annotation.getValue();
-				OWLAnnotation anno;
+		for (OWLAnnotation annotation : prop.getAnnotations(ont)) {
 
-				if (val.hasLang()) {
-					anno = df.getOWLAnnotation(df.getRDFSLabel(),
-							df.getOWLLiteral(val.getLiteral(), val.getLang()));
-				} else {
-					anno = df.getOWLAnnotation(df.getRDFSLabel(),
-							df.getOWLLiteral(val.getLiteral(), val.getDatatype()));
-				}
-
-				OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(prop.getIRI(), anno);
-				axioms.add(ax);
-			}
-			else{
-				if (annotation.getValue() instanceof IRI) {
-					IRI val = (IRI) annotation.getValue();
-					OWLAnnotation anno = df.getOWLAnnotation(df.getRDFSLabel(), val);
-
-					OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(prop.getIRI(), anno);
-					axioms.add(ax);
-				}
-			}
+			OWLAnnotationProperty AnnoProp = annotation.getProperty();
+			OWLAnnotationValue value = annotation.getValue();
+			
+			OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(AnnoProp, prop.getIRI(), value);
+			axioms.add(ax);
 		}
 	}
-
-	public static void extractAndCreateAnnotationPropertyComments(OWLAnnotationProperty prop, Set<OWLAxiom> axioms, OWLOntology ont,
-			OWLDataFactory df) {
-
-		for (OWLAnnotation annot : prop.getAnnotations(ont, df.getRDFSComment())) {
-
-			if (annot.getValue() instanceof OWLLiteral) {
-				OWLLiteral val = (OWLLiteral) annot.getValue();
-				OWLAnnotation annotation;
-
-				if (val.hasLang()) {
-					annotation = df.getOWLAnnotation(df.getRDFSComment(),
-							df.getOWLLiteral(val.getLiteral(), val.getLang()));
-				} else {
-					annotation = df.getOWLAnnotation(df.getRDFSComment(),
-							df.getOWLLiteral(val.getLiteral(), val.getDatatype()));
-				}
-
-				OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(prop.getIRI(), annotation);
-				axioms.add(ax);
-			}		
-			else{
-				if (annot.getValue() instanceof IRI) {
-					IRI val = (IRI) annot.getValue();
-					OWLAnnotation annotation = df.getOWLAnnotation(df.getRDFSComment(), val);
-
-					OWLAnnotationAssertionAxiom ax = df.getOWLAnnotationAssertionAxiom(prop.getIRI(), annotation);
-					axioms.add(ax);
-				}
-			}
-		}
-	}
-
+	
 	public static void extractAndCreateSuperPropertiesOfAnnotationProperty(OWLAnnotationProperty annotationProperty, Set<OWLAxiom> axioms, OWLDataFactory df, OWLOntology ont) {
 
 		for (OWLAnnotationProperty superProp : annotationProperty.getSuperProperties(ont)) {
@@ -1932,8 +1656,8 @@ public class MergingWithRefactoring {
 		}
 	}
 
-
 	public static void createAxiomsOfParsedDataTypes(Set<OWLAxiom>axioms, OWLOntology ont, OWLDataFactory df){
+
 		for(OWLDatatype type : ont.getDatatypesInSignature()){
 
 			OWLDeclarationAxiom ax = df.getOWLDeclarationAxiom(type);
@@ -1946,35 +1670,21 @@ public class MergingWithRefactoring {
 		for (OWLAnonymousIndividual individual : ont.getAnonymousIndividuals()) {
 			for (OWLAnnotationAssertionAxiom assertion : ont.getAnnotationAssertionAxioms(individual)) {
 
-				OWLAnnotation annotation = null;
+				//OWLAnnotation anno = assertion.getAnnotation();
+				OWLAnnotationProperty prop = assertion.getProperty();
+				OWLAnnotationSubject sub = assertion.getSubject();
+				OWLAnnotationValue value = assertion.getValue();
+				Set<OWLAnnotation> annotations = assertion.getAnnotations();
 
-				if (assertion.getProperty().isLabel()) {
-					// if (ann.getValue() instanceof OWLLiteral) {
-					OWLLiteral val = (OWLLiteral) assertion.getValue();
-
-					if (val.hasLang()) {
-						annotation = df.getOWLAnnotation(df.getRDFSLabel(),
-								df.getOWLLiteral(val.getLiteral(), val.getLang()));
-					} else {
-						annotation = df.getOWLAnnotation(df.getRDFSLabel(), df.getOWLLiteral(val.getLiteral()));
-					}
-					// }
-				} else {
-					if (assertion.getProperty().isComment()) {
-						// if (ann.getValue() instanceof OWLLiteral) {
-						OWLLiteral val = (OWLLiteral) assertion.getValue();
-
-						if (val.hasLang()) {
-							annotation = df.getOWLAnnotation(df.getRDFSComment(),
-									df.getOWLLiteral(val.getLiteral(), val.getLang()));
-						} else {
-							annotation = df.getOWLAnnotation(df.getRDFSComment(), df.getOWLLiteral(val.getLiteral()));
-						}
-						// }
-					}
+				if(!assertion.isAnnotated()){
+					OWLAnnotationAssertionAxiom x = df.getOWLAnnotationAssertionAxiom(prop, sub, value);
+					//OWLAnnotationAssertionAxiom x = df.getOWLAnnotationAssertionAxiom(sub, anno);
+					axioms.add(x);
+				}else{
+					OWLAnnotationAssertionAxiom x = df.getOWLAnnotationAssertionAxiom(prop, sub, value, annotations);
+					//OWLAnnotationAssertionAxiom x = df.getOWLAnnotationAssertionAxiom(sub, anno, annotations);
+					axioms.add(x);
 				}
-				OWLAnnotationAssertionAxiom x = df.getOWLAnnotationAssertionAxiom(assertion.getSubject(), annotation);
-				axioms.add(x);
 			}
 		}
 	}
