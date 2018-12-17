@@ -119,6 +119,7 @@ public class MergingWithRefactoring {
 		ThreadMXBean bean = ManagementFactory.getThreadMXBean( );
 		long chrono1 = bean.getCurrentThreadCpuTime();
 
+		
 		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 		OWLDataFactory datafactory = manager.getOWLDataFactory();
 
@@ -278,7 +279,7 @@ public class MergingWithRefactoring {
 
 		System.out.println("==> Step 6 is done : The merged ontology is created\n");
 
-
+		
 		long chrono2 = bean.getCurrentThreadCpuTime();
 		long runtime = chrono2-chrono1;
 
@@ -290,12 +291,12 @@ public class MergingWithRefactoring {
 		checkNumberOfEntitiesOfMergedOntology(mergedOntology, ontologiesSet);
 		OntologyConsistencyAndCoherence.verify(mergedOntology);
 
-
+		
 		System.clearProperty("jdk.xml.entityExpansionLimit");
-
 	}
 
 
+	
 	public static int getMergedNamesForEquivalentEntitiesUsingOriginalAlignments(String alignmentFile, double threshold, HashMap<String, String> hash1, HashMap<String, HashSet<String>> hash2, int k) throws AlignmentException{
 
 		AlignmentParser parser = new AlignmentParser(0);
