@@ -2132,7 +2132,7 @@ public class MergingWithRefactoring {
 		System.out.println("--> There are : " + nbAxioms + " axioms in the merged ontology");
 		System.out.println("    ==> The number of logical axioms in a bridge ontology would be "+ predictedNumberOfAxioms);
 	
-		System.out.println("--> There are " + redundantEntities.size() + " redundant classes");
+		System.out.println("--> There are " + redundantEntities.size() + " redundant classes (that are not merged)");
 	}
 
 	public static int getNumberOfClasses(OWLOntology mergedOntology){
