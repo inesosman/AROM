@@ -1153,7 +1153,7 @@ public class MergingWithRefactoring {
 					String c = ch.substring((index + 1));
 
 					objectProp = df.getOWLObjectProperty(IRI.create(iri + number + "#" + c));
-					//objectProp = df.getOWLObjectProperty(IRI.create(iri + numéro + "#", objProperty.getIRI().getFragment()));
+					//objectProp = df.getOWLObjectProperty(IRI.create(iri + numÃ©ro + "#", objProperty.getIRI().getFragment()));
 					OWLDeclarationAxiom ax = df.getOWLDeclarationAxiom(objectProp);
 					axioms.add(ax);
 				}
@@ -2132,7 +2132,7 @@ public class MergingWithRefactoring {
 		System.out.println("--> There are : " + nbAxioms + " axioms in the merged ontology");
 		System.out.println("    ==> The number of logical axioms in a bridge ontology would be "+ predictedNumberOfAxioms);
 	
-		System.out.println("--> There are " + redundantEntities.size() + " redundant entities");
+		System.out.println("--> There are " + redundantEntities.size() + " redundant classes");
 	}
 
 	public static int getNumberOfClasses(OWLOntology mergedOntology){
