@@ -132,7 +132,7 @@ public class MergingWithRefactoring {
 
 		/** Conference base */
 //		ontologiesFiles.add("Data/cmt.owl");
-//	    ontologiesFiles.add("Data/Conference.owl");
+//	        ontologiesFiles.add("Data/Conference.owl");
 //		ontologiesFiles.add("Data/confOf.owl");
 //		ontologiesFiles.add("Data/edas.owl");
 //		ontologiesFiles.add("Data/ekaw.owl");
@@ -643,6 +643,7 @@ public class MergingWithRefactoring {
 				extractAndCreateClassAnnotations(clsA, axioms, df, cls, ont); //labels, comments, and non built-in annotations
 				extractAndCreateSuperClassesOfClass(mergedEntitiesNewNames, iri, number, axioms, clsA, df, ont, cls);
 				extractAndCreateEquivalentClassesOfClass(mergedEntitiesNewNames, iri, number, df, clsA, axioms, cls, ont);
+				/** if you don't want to include disjoint axioms between classes, comment the following instruction */
 				extractAndCreateDisjointClassesOfClass(mergedEntitiesNewNames, clsA, axioms, iri, number, df, cls, ont);
 
 				//} else {
