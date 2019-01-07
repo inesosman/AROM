@@ -630,13 +630,12 @@ public class MergingWithoutRefactoring {
 				extractAndCreateEquivalentClassesOfClass(clsA, mergedEntitiesNewNames, iri, df, axioms, cls, ont);
 				/** if you don't want to include disjoint axioms between classes, comment the following instruction */
 				extractAndCreateDisjointClassesOfClass(clsA, mergedEntitiesNewNames, axioms, iri,df, cls, ont);
-
-				//} else {
-				//OWLClass clsA = df.getOWLThing();
-				//OWLDeclarationAxiom ax = df.getOWLDeclarationAxiom(clsA);
-				//axioms.add(ax);
-				//}
 			}
+			//} else {
+			//OWLClass clsA = df.getOWLThing();
+			//OWLDeclarationAxiom ax = df.getOWLDeclarationAxiom(clsA);
+			//axioms.add(ax);
+			//}
 		}
 	}
 
@@ -1124,13 +1123,12 @@ public class MergingWithoutRefactoring {
 				extractAndCreateInversePropertiesOfObjectProperty(objectProp, mergedEntitiesNewNames, iri, axioms, df, ont, objProperty);
 				extractAndCreateDisjointPropertiesOfObjectProperty(objectProp, mergedEntitiesNewNames, iri, axioms, df, ont, objProperty);
 				extractAndCreateEquivalentPropertiesOfObjectProperty(objectProp, mergedEntitiesNewNames, iri, axioms, df, ont, objProperty);
-				
-				//} else {
-				//OWLObjectProperty objectProp = df.getOWLTopObjectProperty();
-				//OWLDeclarationAxiom ax = df.getOWLDeclarationAxiom(objectProp);
-				//axioms.add(ax);
-				//}
 			}
+			//} else {
+			//OWLObjectProperty objectProp = df.getOWLTopObjectProperty();
+			//OWLDeclarationAxiom ax = df.getOWLDeclarationAxiom(objectProp);
+			//axioms.add(ax);
+			//}
 		}
 	}
 	
@@ -1291,13 +1289,12 @@ public class MergingWithoutRefactoring {
 				extractAndCreateSuperPropertiesOfDataProperty(dProp, mergedEntitiesNewNames, iri, axioms, df, dataProperty, ont);
 				extractAndCreateEquivalentPropertiesOfDataProperty(dProp, mergedEntitiesNewNames, iri, axioms, df, dataProperty, ont);
 				extractAndCreateDisjointPropertiesOfDataProperty(dProp, mergedEntitiesNewNames, iri, axioms, df, dataProperty, ont);
-
-				//} else {
-				//OWLDataProperty dProp = df.getOWLTopDataProperty();
-				//OWLDeclarationAxiom ax = df.getOWLDeclarationAxiom(dProp);
-				//axioms.add(ax);
-				//}
 			}
+			//} else {
+			//OWLDataProperty dProp = df.getOWLTopDataProperty();
+			//OWLDeclarationAxiom ax = df.getOWLDeclarationAxiom(dProp);
+			//axioms.add(ax);
+			//}
 		}
 	}
 
