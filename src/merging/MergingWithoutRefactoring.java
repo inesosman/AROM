@@ -628,6 +628,7 @@ public class MergingWithoutRefactoring {
 				extractAndCreateClassAnnotations(clsA, axioms, df, cls, ont); //labels, comments, and non built-in annotations
 				extractAndCreateSuperClassesOfClass(clsA, mergedEntitiesNewNames, iri, axioms, df, ont, cls);
 				extractAndCreateEquivalentClassesOfClass(clsA, mergedEntitiesNewNames, iri, df, axioms, cls, ont);
+				/** if you don't want to include disjoint axioms between classes, comment the following instruction */
 				extractAndCreateDisjointClassesOfClass(clsA, mergedEntitiesNewNames, axioms, iri,df, cls, ont);
 
 				//} else {
