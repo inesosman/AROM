@@ -230,6 +230,7 @@ public class MergingWithoutRefactoring {
 			ontologyCounter++;
 			String ontoCounter = String.valueOf(ontologyCounter);
 
+			/** you can enter the following method(s) and comment the parsing of disjoint axioms (which are the cause of future unsatisfiabilities) */
 			createAxiomsOfParsedClasses(hash_entitiesMergedNames, datafactory, ontology_n, mergedOntologyAxioms, mergedOntologyIRI, classes, ontoCounter);
 			createAxiomsOfParsedObjectProperties(hash_entitiesMergedNames, datafactory, ontology_n, mergedOntologyAxioms, mergedOntologyIRI, objectProps, ontoCounter);
 			createAxiomsOfParsedDataProperties(hash_entitiesMergedNames, datafactory, ontology_n, mergedOntologyAxioms, mergedOntologyIRI, dataProps, ontoCounter);
@@ -237,11 +238,6 @@ public class MergingWithoutRefactoring {
 
 			createAxiomsOfParsedSubPropertyChainOfAxioms(hash_entitiesMergedNames, datafactory, ontology_n, mergedOntologyAxioms, mergedOntologyIRI);
 			//createAxiomsOfParsedHasKeyAxioms(hash_entitiesMergedNames, datafactory, ontology_n, mergedOntologyAxioms, mergedOntologyIRI);
-			
-			/** these three following methods can be commented, because alignments don't map annotation Properties,
-			 * Data Types, or anonymous individuals. We just put them to preserve all ontologies knowledge (axioms).
-			 */
-
 			createAxiomsOfParsedNonBuiltInAnnotationProperties(mergedOntologyAxioms, ontology_n, datafactory);
 			//createAxiomsOfParsedDataTypes(mergedOntologyAxioms, ontology_n, datafactory);
 			createAxiomsOfParsedAnonymousIndividuals(mergedOntologyAxioms, datafactory, ontology_n);
