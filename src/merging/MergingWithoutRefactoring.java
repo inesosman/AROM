@@ -129,13 +129,13 @@ public class MergingWithoutRefactoring {
 		/** selecting and entering input ontologies to be merged */
 
 		/** Conference base */
-        //ontologiesFiles.add("Data/cmt.owl");
-        //ontologiesFiles.add("Data/Conference.owl");
-        //ontologiesFiles.add("Data/confOf.owl");
-        //ontologiesFiles.add("Data/edas.owl");
-        //ontologiesFiles.add("Data/ekaw.owl");
-        //ontologiesFiles.add("Data/iasted.owl");
-        //ontologiesFiles.add("Data/sigkdd.owl");
+                //ontologiesFiles.add("Data/cmt.owl");
+                //ontologiesFiles.add("Data/Conference.owl");
+                //ontologiesFiles.add("Data/confOf.owl");
+                //ontologiesFiles.add("Data/edas.owl");
+                //ontologiesFiles.add("Data/ekaw.owl");
+                //ontologiesFiles.add("Data/iasted.owl");
+                //ontologiesFiles.add("Data/sigkdd.owl");
 
 		/** Anatomy base */
 		//ontologiesFiles.add("Data/human.owl");
@@ -147,7 +147,7 @@ public class MergingWithoutRefactoring {
 		ontologiesFiles.add("Data/SNOMED3.owl");   /** extended SNOMED */
 
 
-		for(int g=0; g<ontologiesFiles.size(); g++){
+		for(int g=0; g < ontologiesFiles.size(); g++){
 			ontologiesSet.add(manager.loadOntologyFromOntologyDocument(new File(ontologiesFiles.get(g))));
 		}
 
@@ -193,9 +193,9 @@ public class MergingWithoutRefactoring {
 
 		/**********************************************************************************************************************************************/		
 
-		/** choose one of the four following methods (if you uncomment one, comment the others, and vice versa) */
-		/** the filtering soft version keeps the higher-multiplicity correspondences having equal confidence values */
-		/** while the filtering hard version only keeps a single correspondence from the higher-multiplicity correspondences, even if they have exactly equal confidence values */
+		/** Choose one of the following methods (if you uncomment one, comment the others, and vice versa) */
+		/** The filtering soft version keeps the higher-multiplicity correspondences having equal confidence values */
+		/** While the filtering hard version only keeps a single correspondence from the higher-multiplicity correspondences, even if they have exactly equal confidence values */
 		
 		HashMap<String, String> hash_entitiesMergedNames = new HashMap<String, String>();
 		HashMap<String, HashSet<String>> hash_mergedNamesEntities = new HashMap<String, HashSet<String>>();
