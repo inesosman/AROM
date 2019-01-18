@@ -22,7 +22,7 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 
 public class ClassHierarchy {
-	static int k=0;
+	static int k = 0;
 
 	public static void printHierarchy(Set<String> list, OWLOntology ont,OWLClass clas) throws OWLException {
 		
