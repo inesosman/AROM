@@ -195,7 +195,7 @@ public class MergingWithRefactoring {
 
 		/**********************************************************************************************************************************************/		
 
-		/** Choose one of the four following methods (if you uncomment one, comment the others, and vice versa) */
+		/** Choose one of the following methods (if you uncomment one, comment the others, and vice versa) */
 		/** The filtering soft version keeps the higher-multiplicity correspondences having equal confidence values */
 		/** While the filtering hard version only keeps a single correspondence from the higher-multiplicity correspondences, even if they have exactly equal confidence values */
 		
