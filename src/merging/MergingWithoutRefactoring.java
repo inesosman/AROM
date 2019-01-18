@@ -539,7 +539,7 @@ public class MergingWithoutRefactoring {
 	public static void filterEquivalentCellsHavingSameSources_Hard(HashMap<String, HashSet<String>> sourcesFilteringHash,
 			HashMap<String, String> sourceFilteringHashConf, Cell cell, String entity1, String entity2) {
 
-		if ( (!sourcesFilteringHash.containsKey(entity1)) || (cell.getStrength() > Double.valueOf(sourceFilteringHashConf.get(entity1))) ) {
+		if ((!sourcesFilteringHash.containsKey(entity1)) || (cell.getStrength() > Double.valueOf(sourceFilteringHashConf.get(entity1))) ) {
 			HashSet<String> set = new HashSet<String>();
 			set.add(entity2);
 			sourcesFilteringHash.put(entity1, set);
