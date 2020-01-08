@@ -6,7 +6,7 @@ Let's merge the three ontologies of the **Large Biomedical Ontologies** OAEI tra
 
 ## Input Alignments
 
-These are three equivalence correspondences from the "Large Biomedical Ontologies" OAEI reference alignments.
+These are three equivalence correspondences from the "Large Biomedical Ontologies" OAEI reference alignments :
 
 ### * FMA-NCI
 
@@ -75,5 +75,5 @@ You can download and view this [refactored merged ontology](https://github.com/i
 ## Conclusion
 
 * Our final ontology is complete, in the sense that it retains all entities, axioms and hierarchies from the input ontologies.
-* Running AROM for merging the *Large Biomedical Ontologies* do not exceed **one minute**.
+* Running AROM for merging the *Large Biomedical Ontologies* does not exceed **one minute**.
 
