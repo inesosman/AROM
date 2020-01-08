@@ -4,7 +4,7 @@ AROM is an approach for creating a new ontology resulting from a full merge of m
 Let's merge the three ontologies of the **Large Biomedical Ontologies** OAEI track. We will merge them using reference alignments between all possible ontology pairs. This will ensure a complete semantic interoperability between them. All tests were performed with a confidence threshold equal to 0.0, so we kept all correspondences / cells of the input alignments.
 
 
-## Input Alignments
+## Input Alignments (FMA-NCI + SNOMED-NCI + FMA-SNOMED)
 
 These are three equivalence correspondences from the "Large Biomedical Ontologies" OAEI reference alignments :
 
@@ -28,7 +28,7 @@ The third correspondence (in [FMA-SNOMED](https://github.com/inesosman/AROM/blob
 
 
 
-## Input Ontologies
+## Input Ontologies (FMA + NCI + SNOMED)
 
 ### * FMA
 
