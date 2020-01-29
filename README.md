@@ -1,7 +1,7 @@
 # **AROM** (**A**lignments **R**euse for **O**ntology **M**erging)
 AROM is an approach for creating a new ontology resulting from a full merge of multiple ontologies using pairwise alignments between them. It automatically customizes and merges multiple ontologies in a holistic manner and in very short times.
 
----
+
 
 ## Installation
 
@@ -21,6 +21,9 @@ Download AROM and open it in your IDE, then manually add all the jars of the [li
 ### Output
 
 * A new merged ontology (an owl file in the [Results](https://github.com/inesosman/AROM/tree/master/Results) folder).
+
+
+---
 
 
 # Example
