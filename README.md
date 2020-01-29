@@ -99,6 +99,8 @@ You can download and view this [non-refactored merged ontology](https://github.c
 For the customized version, axioms are like the original ones, except that the IRIs of all mentioned entities are customized.
 You can download and view this [refactored merged ontology](https://github.com/inesosman/AROM/blob/master/Results/Merge_LargeBio_Refactored.owl) from the Results folder.
 
+---
+
 ## Conclusion
 
 * Our final ontology is complete, in the sense that it retains all entities, axioms and hierarchies from the input ontologies, and correspondences from the input alignments.
