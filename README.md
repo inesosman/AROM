@@ -5,7 +5,7 @@ AROM is an approach for creating a new ontology resulting from a full merge of m
 
 ## Installation
 
-Download AROM and open it in your IDE, then manually add all the jars of the [lib](https://github.com/inesosman/AROM/tree/master/lib) folder to the classpath. The [lib](https://github.com/inesosman/AROM/tree/master/lib) folder contains OWL API jars and their dependencies, Alignment API jars, HermiT jars, and ELK jars. Then, run one of the following classes of the [src/merging](https://github.com/inesosman/AROM/tree/master/src/merging) folder (depending on your choice) :
+Download AROM and open it in your IDE, then manually add all the jars of the [lib](https://github.com/inesosman/AROM/tree/master/lib) folder to the classpath. The [lib](https://github.com/inesosman/AROM/tree/master/lib) folder contains OWL API jars and their dependencies, Alignment API jars, HermiT reasoner jars, and ELK reasoner jars. Then, run one of the following classes of the [src/merging](https://github.com/inesosman/AROM/tree/master/src/merging) folder (depending on your choice) :
 
 * [MergingWithoutRefactoring](https://github.com/inesosman/AROM/blob/master/src/merging/MergingWithoutRefactoring.java) : It parses all the input ontologies' axioms, and creates an exact copy of them. Then, it merges equivent entities as prescribed in the input alignment(s), and adds bridging axioms (other than equivalence relations) to link different entities.
 
