@@ -3,7 +3,7 @@ AROM is an approach for creating a new ontology resulting from a full merge of m
 
 
 
-# Installation
+## Installation
 
 Download AROM and open it in your IDE, then manually add all the jars of the [lib](https://github.com/inesosman/AROM/tree/master/lib) folder to the classpath. The [lib](https://github.com/inesosman/AROM/tree/master/lib) folder contains OWL API jars and their dependencies, Alignment API jars, HermiT jars, and ELK jars. Then, run one of the following classes of the [src/merging](https://github.com/inesosman/AROM/tree/master/src/merging) folder (depending on your choice) :
 
@@ -11,14 +11,14 @@ Download AROM and open it in your IDE, then manually add all the jars of the [li
 
 * [MergingWithRefactoring](https://github.com/inesosman/AROM/blob/master/src/merging/MergingWithRefactoring.java) : It parses all the input ontologies' axioms, and creates a refactored copy of them. A full IRI of an entity (which can be a class, a property, or an individual) is composed of a prefix, followed by a local name (*i.e.*, a suffix or an abbriviated name). Refactoring consists in replacing the prefix IRI of each entity (*i.e.*, the part before the #) by the IRI of the furture merged ontology. Then, it merges equivent refactored entities as prescribed in the input alignment(s), and adds bridging axioms (other than equivalence relations) to link different refactored entities.
 
-## Input
+### Input
 
 * Two or more OWL ontologies to be merged (owl files in the [Data](https://github.com/inesosman/AROM/tree/master/Data) folder) (the path of the files should be correct !)
 * One or more ontology alignments (in the Alignment API format) (rdf files in the [Data](https://github.com/inesosman/AROM/tree/master/Data) folder) (the path of the files should be correct !)
 * A new IRI for the output merged ontology
 * A threshold real value between [0,1] to filter the alignment correspondences by their confidence measure.
 
-## Output
+### Output
 
 * A new merged ontology (an owl file in the [Results](https://github.com/inesosman/AROM/tree/master/Results) folder).
 
@@ -26,7 +26,7 @@ Download AROM and open it in your IDE, then manually add all the jars of the [li
 ---
 
 
-# Example
+## Example
 
 Let's merge the three ontologies of the **Large Biomedical Ontologies** OAEI track. We will merge them using reference alignments between all possible ontology pairs. This will ensure a complete semantic interoperability between them. All tests were performed with a confidence threshold equal to 0.0, so we kept all correspondences / cells of the input alignments.
 
@@ -101,7 +101,7 @@ You can download and view this [refactored merged ontology](https://github.com/i
 
 ---
 
-# Conclusion
+## Conclusion
 
 * Our final ontology is complete, in the sense that it retains all entities, axioms and hierarchies from the input ontologies, and correspondences from the input alignments.
 * Running AROM for merging the *Large Biomedical Ontologies* does not exceed **one minute**.
