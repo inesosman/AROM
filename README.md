@@ -5,11 +5,11 @@ AROM is an approach for creating a new ontology resulting from a full merge of m
 
 ## Installation
 
-Download AROM and open it in your IDE, then manually add all the jars of the [lib](https://github.com/inesosman/AROM/tree/master/lib) folder to the classpath. The [lib](https://github.com/inesosman/AROM/tree/master/lib) folder contains OWL API jars and their dependencies, Alignment API jars, HermiT jars, and ELK jars. Then, run one of the three following classes of the [src/merging](https://github.com/inesosman/AROM/tree/master/src/merging) folder (depending on your choice) :
+Download AROM and open it in your IDE, then manually add all the jars of the [lib](https://github.com/inesosman/AROM/tree/master/lib) folder to the classpath. The [lib](https://github.com/inesosman/AROM/tree/master/lib) folder contains OWL API jars and their dependencies, Alignment API jars, HermiT jars, and ELK jars. Then, run one of the following classes of the [src/merging](https://github.com/inesosman/AROM/tree/master/src/merging) folder (depending on your choice) :
 
 * [MergingWithoutRefactoring](https://github.com/inesosman/AROM/blob/master/src/merging/MergingWithoutRefactoring.java): It parses all the input ontologies' axioms, and creates an exact copy of them. Then, it merges equivent entities as prescribed in the input alignment(s), and adds bridging axioms (other than equivalence relations) to link different entities.
 
-* [MergingWithRefactoring](https://github.com/inesosman/AROM/blob/master/src/merging/MergingWithRefactoring.java): It parses all the input ontologies' axioms, and creates a refactored copy of them. Refactoring consists in replacing the prefix IRIs of all entities by the IRI of the furture merged ontology. Then, it merges equivent refactored entities as prescribed in the input alignment(s), and adds bridging axioms (other than equivalence relations) to link different refactored entities.
+* [MergingWithRefactoring](https://github.com/inesosman/AROM/blob/master/src/merging/MergingWithRefactoring.java): It parses all the input ontologies' axioms, and creates a refactored copy of them. Refactoring consists in replacing the prefix IRI of each entity (*i.e.*, the part before the #) by the IRI of the furture merged ontology. Then, it merges equivent refactored entities as prescribed in the input alignment(s), and adds bridging axioms (other than equivalence relations) to link different refactored entities.
 
 ### Input
 
