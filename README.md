@@ -15,8 +15,8 @@ Download AROM and open it in your IDE, then manually add all the jars of the [li
 
 * Two or more OWL ontologies to be merged (`owl` files in the [Data](https://github.com/inesosman/AROM/tree/master/Data) folder) (the path of the files should be correct !)
 * One or more ontology alignments (in the Alignment API format) (`rdf` files in the [Data](https://github.com/inesosman/AROM/tree/master/Data) folder) (the path of the files should be correct !)
-* A new IRI for the output merged ontology
-* A threshold real value between [0,1] to filter the alignment correspondences by their confidence measure.
+* A new `IRI` for the output merged ontology
+* A threshold `real` value between [0,1] to filter the alignment correspondences by their confidence measure.
 
 ### Output
 
