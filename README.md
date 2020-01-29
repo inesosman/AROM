@@ -1,6 +1,30 @@
 # **AROM** (**A**lignments **R**euse for **O**ntology **M**erging)
 AROM is an approach for creating a new ontology resulting from a full merge of multiple ontologies using pairwise alignments between them. It automatically customizes and merges multiple ontologies in a holistic manner and in very short times.
 
+
+
+## Installation
+
+Download AROM and open it in your IDE, then manually add all the jars of the [lib](https://github.com/inesosman/AROM/tree/master/lib) folder to the classpath. The [lib](https://github.com/inesosman/AROM/tree/master/lib) folder contains OWL API jars and their dependencies, Alignment API jars, HermiT jars, and ELK jars. Then, run one of the three following classes of the [src/merging](https://github.com/inesosman/AROM/tree/master/src/merging) folder (depending on your choice) :
+
+* [MergingWithoutRefactoring](https://github.com/inesosman/AROM/blob/master/src/merging/MergingWithoutRefactoring.java): It parses all the input ontologies' axioms, and creates an exact copy of them. Then, it merges equivent entities as prescribed in the input alignment(s), and adds bridging axioms (other than equivalence relations) to link different entities.
+
+* [MergingWithRefactoring](https://github.com/inesosman/AROM/blob/master/src/merging/MergingWithRefactoring.java): It parses all the input ontologies' axioms, and creates a refactored copy of them. Refactoring consists in replacing the prefix IRIs of all entities by the IRI of the furture merged ontology. Then, it merges equivent refactored entities as prescribed in the input alignment(s), and adds bridging axioms (other than equivalence relations) to link different refactored entities.
+
+### Input
+
+* Two or more OWL ontologies to be merged (owl files in the [Data](https://github.com/inesosman/AROM/tree/master/Data) folder) (the path of the files should be correct !)
+* One or more ontology alignments (in the Alignment API format) (rdf files in the [Data](https://github.com/inesosman/AROM/tree/master/Data) folder) (the path of the files should be correct !)
+* A new IRI for the output merged ontology
+* A threshold real value between [0,1] to filter the alignment correspondences by their confidence measure.
+
+### Output
+
+* A new merged ontology (an owl file in the [Results](https://github.com/inesosman/AROM/tree/master/Results) folder).
+
+
+# Example
+
 Let's merge the three ontologies of the **Large Biomedical Ontologies** OAEI track. We will merge them using reference alignments between all possible ontology pairs. This will ensure a complete semantic interoperability between them. All tests were performed with a confidence threshold equal to 0.0, so we kept all correspondences / cells of the input alignments.
 
 
