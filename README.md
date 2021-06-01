@@ -87,14 +87,14 @@ You can view and download all our merged ontologies from the [Results folder](ht
 
 ### <ins>Non-Refactored Version</ins>
 
-![MergedClass](https://github.com/inesosman/AROM/blob/master/Figures/merged_class_non_refactored.png)
+![MergedClass](https://github.com/inesosman/AROM/blob/master/Figures/non_refactored_merged_class.png)
 
 For the non-customized version, axioms are exactly like the original ones. 
 You can download and view this [non-refactored merged ontology](https://github.com/inesosman/AROM/blob/master/Results/Merge_LargeBio.owl) from the Results folder.
 
 ### <ins>Refactored Version</ins>
 
-![RefactoredMergedClass](https://github.com/inesosman/AROM/blob/master/Figures/merged_class_refactored.png)
+![RefactoredMergedClass](https://github.com/inesosman/AROM/blob/master/Figures/refactored_merged_class.png)
 
 For the customized version, axioms are like the original ones, except that the IRIs of all mentioned entities are customized.
 You can download and view this [refactored merged ontology](https://github.com/inesosman/AROM/blob/master/Results/Merge_LargeBio_Refactored.owl) from the Results folder.
