@@ -28,7 +28,7 @@ Download AROM and open it in your IDE, then manually add all the jars of the [li
 
 # Example
 
-Let's merge the three ontologies of the **Large Biomedical Ontologies** OAEI track. We will merge them using reference alignments between all possible ontology pairs. This will ensure a complete semantic interoperability between them. All tests were performed with a confidence threshold equal to 0.0, so we kept all correspondences / cells of the input alignments.
+Let's merge the three ontologies of the **Large Biomedical Ontologies** OAEI track. We will merge them using reference alignments between all possible ontology pairs. This will ensure a complete semantic interoperability between them. All tests were performed with a confidence threshold equal to 0.0, so we have kept all correspondences / cells of the input alignments.
 
 
 ## Input Alignments (FMA-NCI + SNOMED-NCI + FMA-SNOMED)
