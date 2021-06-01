@@ -89,7 +89,7 @@ You can view and download all our merged ontologies from the [Results folder](ht
 
 ![MergedClass](https://github.com/inesosman/AROM/blob/master/Figures/merged_class_non_refactored.png)
 
-For the non-customized version, axioms are exactly like the original ones.
+For the non-customized version, axioms are exactly like the original ones. 
 You can download and view this [non-refactored merged ontology](https://github.com/inesosman/AROM/blob/master/Results/Merge_LargeBio.owl) from the Results folder.
 
 ### <ins>Refactored Version</ins>
