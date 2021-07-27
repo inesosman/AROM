@@ -11,6 +11,8 @@ Download AROM and open it in your IDE, then manually add all the jars of the [li
 
 * [MergingWithRefactoring](https://github.com/inesosman/AROM/blob/master/src/merging/MergingWithRefactoring.java) : It parses all the input ontologies' axioms, and creates a refactored copy of them. A full IRI of an entity (which can be a class, a property, or an individual) is composed of a prefix, followed by a local name (*i.e.*, a suffix or an abbriviated name). Refactoring consists in replacing the prefix IRI of each entity (*i.e.*, the part before the #) by the IRI of the furture merged ontology. Then, it merges equivent refactored entities as prescribed in the input alignment(s), and adds bridging axioms (other than equivalence relations) to link different refactored entities.
 
+__N.B__: [Git](https://git-scm.com/downloads) should be installed in the machine, in order to run these algorithms directly from the downloaded project.
+
 ### Input
 
 * Two or more OWL ontologies to be merged (`owl` files in the [Data](https://github.com/inesosman/AROM/tree/master/Data) folder) (the path of the files should be correct !)
