@@ -131,22 +131,22 @@ public class MergingWithRefactoring {
 		/** selecting and entering input ontologies to be merged */
 
 		/** Conference base */
-                //ontologiesFiles.add("Data/cmt.owl");
-                //ontologiesFiles.add("Data/Conference.owl");
-                //ontologiesFiles.add("Data/confOf.owl");
-                //ontologiesFiles.add("Data/edas.owl");
-                //ontologiesFiles.add("Data/ekaw.owl");
-                //ontologiesFiles.add("Data/iasted.owl");
-                //ontologiesFiles.add("Data/sigkdd.owl");
+                ontologiesFiles.add("Data/cmt.owl");
+                ontologiesFiles.add("Data/Conference.owl");
+                ontologiesFiles.add("Data/confOf.owl");
+                ontologiesFiles.add("Data/edas.owl");
+                ontologiesFiles.add("Data/ekaw.owl");
+                ontologiesFiles.add("Data/iasted.owl");
+                ontologiesFiles.add("Data/sigkdd.owl");
 
 		/** Anatomy base */
 		//ontologiesFiles.add("Data/human.owl");
 		//ontologiesFiles.add("Data/mouse.owl");
 
 		/** LargeBio base */
-		ontologiesFiles.add("Data/FMA3.owl");   /** whole FMA */
-		ontologiesFiles.add("Data/NCI3.owl");   /** whole NCI */
-		ontologiesFiles.add("Data/SNOMED3.owl");   /** extended SNOMED */
+		//ontologiesFiles.add("Data/FMA3.owl");   /** whole FMA */
+		//ontologiesFiles.add("Data/NCI3.owl");   /** whole NCI */
+		//ontologiesFiles.add("Data/SNOMED3.owl");   /** extended SNOMED */
 
 
 		for(int g=0; g < ontologiesFiles.size(); g++){
@@ -161,35 +161,35 @@ public class MergingWithRefactoring {
 		ArrayList<String> alignmentsFiles = new ArrayList<String>();
 
 		/** Conference base */
-//		alignmentsFiles.add("Data/cmt-conference.rdf");
-//		alignmentsFiles.add("Data/cmt-confOf.rdf");
-//		alignmentsFiles.add("Data/cmt-edas.rdf");
-//		alignmentsFiles.add("Data/cmt-ekaw.rdf");
-//		alignmentsFiles.add("Data/cmt-iasted.rdf");
-//		alignmentsFiles.add("Data/cmt-sigkdd.rdf");
-//		alignmentsFiles.add("Data/conference-confOf.rdf");
-//		alignmentsFiles.add("Data/conference-edas.rdf");
-//		alignmentsFiles.add("Data/conference-ekaw.rdf");
-//		alignmentsFiles.add("Data/conference-iasted.rdf");
-//		alignmentsFiles.add("Data/conference-sigkdd.rdf");
-//		alignmentsFiles.add("Data/confOf-edas.rdf");
-//		alignmentsFiles.add("Data/confOf-ekaw.rdf");
-//		alignmentsFiles.add("Data/confOf-iasted.rdf");
-//		alignmentsFiles.add("Data/confOf-sigkdd.rdf");
-//		alignmentsFiles.add("Data/edas-ekaw.rdf");
-//		alignmentsFiles.add("Data/edas-iasted.rdf");
-//		alignmentsFiles.add("Data/edas-sigkdd.rdf");
-//		alignmentsFiles.add("Data/ekaw-iasted.rdf");
-//		alignmentsFiles.add("Data/ekaw-sigkdd.rdf");
-//		alignmentsFiles.add("Data/iasted-sigkdd.rdf");
+		alignmentsFiles.add("Data/cmt-conference.rdf");
+		alignmentsFiles.add("Data/cmt-confOf.rdf");
+		alignmentsFiles.add("Data/cmt-edas.rdf");
+		alignmentsFiles.add("Data/cmt-ekaw.rdf");
+		alignmentsFiles.add("Data/cmt-iasted.rdf");
+		alignmentsFiles.add("Data/cmt-sigkdd.rdf");
+		alignmentsFiles.add("Data/conference-confOf.rdf");
+		alignmentsFiles.add("Data/conference-edas.rdf");
+		alignmentsFiles.add("Data/conference-ekaw.rdf");
+		alignmentsFiles.add("Data/conference-iasted.rdf");
+		alignmentsFiles.add("Data/conference-sigkdd.rdf");
+		alignmentsFiles.add("Data/confOf-edas.rdf");
+		alignmentsFiles.add("Data/confOf-ekaw.rdf");
+		alignmentsFiles.add("Data/confOf-iasted.rdf");
+		alignmentsFiles.add("Data/confOf-sigkdd.rdf");
+		alignmentsFiles.add("Data/edas-ekaw.rdf");
+		alignmentsFiles.add("Data/edas-iasted.rdf");
+		alignmentsFiles.add("Data/edas-sigkdd.rdf");
+		alignmentsFiles.add("Data/ekaw-iasted.rdf");
+		alignmentsFiles.add("Data/ekaw-sigkdd.rdf");
+		alignmentsFiles.add("Data/iasted-sigkdd.rdf");
 
 		/** Anatomy base */
 		//alignmentsFiles.add("Data/human-mouse.rdf");
 
 		/** Largebio base */
-		alignmentsFiles.add("Data/FMA2NCI.rdf");
-		alignmentsFiles.add("Data/FMA2SNOMED.rdf");
-		alignmentsFiles.add("Data/SNOMED2NCI.rdf");
+		//alignmentsFiles.add("Data/FMA2NCI.rdf");
+		//alignmentsFiles.add("Data/FMA2SNOMED.rdf");
+		//alignmentsFiles.add("Data/SNOMED2NCI.rdf");
 
 		System.out.println("\n==> Step 1 is done\n");
 
@@ -205,11 +205,11 @@ public class MergingWithRefactoring {
 		HashSet<String> redundantEntities = new HashSet<String>();
 		int codeCounter = 0;
 		for (String alignment : alignmentsFiles) {
-			//codeCounter = getMergedNamesForEquivalentEntitiesUsingOriginalAlignments(alignment, threshold, hash_entitiesMergedNames, hash_mergedNamesEntities, codeCounter);
+			codeCounter = getMergedNamesForEquivalentEntitiesUsingOriginalAlignments(alignment, threshold, hash_entitiesMergedNames, hash_mergedNamesEntities, codeCounter);
 			//codeCounter = getMergedNamesForEquivalentEntitiesUsingRepairedAlignments(alignment, threshold, hash_entitiesMergedNames, hash_mergedNamesEntities, codeCounter, redundantEntities);
 			//codeCounter = getMergedNamesForEquivalentEntitiesUsingFilteredAlignments_SoftVersion(alignment, threshold, hash_entitiesMergedNames, hash_mergedNamesEntities, codeCounter, redundantEntities);
 			//codeCounter = getMergedNamesForEquivalentEntitiesUsingFilteredAlignments_HardVersion(alignment, threshold, hash_entitiesMergedNames, hash_mergedNamesEntities, codeCounter, redundantEntities);
-			codeCounter = getMergedNamesForEquivalentEntitiesUsingRepairedAndFilteredAlignments_SoftVersion(alignment, threshold, hash_entitiesMergedNames, hash_mergedNamesEntities, codeCounter, redundantEntities);
+			//codeCounter = getMergedNamesForEquivalentEntitiesUsingRepairedAndFilteredAlignments_SoftVersion(alignment, threshold, hash_entitiesMergedNames, hash_mergedNamesEntities, codeCounter, redundantEntities);
 			//codeCounter = getMergedNamesForEquivalentEntitiesUsingRepairedAndFilteredAlignments_HardVersion(alignment, threshold, hash_entitiesMergedNames, hash_mergedNamesEntities, codeCounter, redundantEntities);
 		}
 
@@ -260,8 +260,8 @@ public class MergingWithRefactoring {
 		 */
 
 		for (String alignment : alignmentsFiles) {
-			//createSubsumptionAndDisjointedBridgingAxiomsUsingOriginalAlignments(alignment, threshold, mergedOntologyIRI, hash_entitiesMergedNames, datafactory, mergedOntologyAxioms, classes, objectProps, dataProps, instances);
-			createSubsumptionAndDisjointedBridgingAxiomsUsingFilteredAlignments(alignment, threshold, mergedOntologyIRI, hash_entitiesMergedNames, datafactory, mergedOntologyAxioms, classes, objectProps, dataProps, instances);
+			createSubsumptionAndDisjointedBridgingAxiomsUsingOriginalAlignments(alignment, threshold, mergedOntologyIRI, hash_entitiesMergedNames, datafactory, mergedOntologyAxioms, classes, objectProps, dataProps, instances);
+			//createSubsumptionAndDisjointedBridgingAxiomsUsingFilteredAlignments(alignment, threshold, mergedOntologyIRI, hash_entitiesMergedNames, datafactory, mergedOntologyAxioms, classes, objectProps, dataProps, instances);
 		}
 
 		System.out.println("\n==> Step 5 is done");
