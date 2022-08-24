@@ -268,6 +268,8 @@ public class MergingWithRefactoring {
 
 		/***********************************************************************************************************************************************/
 
+		/** creating the merged ontology and specifying its path. */
+
 		manager.addAxioms(mergedOntology, mergedOntologyAxioms);
 
 		manager.saveOntology(mergedOntology, new RDFXMLOntologyFormat(), IRI.create(new File("Results/MergedOntology_WithRefact.owl")));
