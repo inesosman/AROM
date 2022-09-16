@@ -13,6 +13,8 @@ Download AROM and open it in your IDE, then manually add all the jars of the [li
 
 __N.B__: [Git](https://git-scm.com/downloads) should be installed in the machine, in order to run these algorithms directly from the downloaded project.
 
+__N.B__: See [AROM (V2)](https://github.com/inesosman/AROM-V2-) if you want to try a version that uses OWL API 4.5. And see [AROM (V3)](https://github.com/inesosman/AROM-V3-) if you want to try a version that uses OWL API 5.1.
+
 ### Input
 
 * Two or more OWL ontologies to be merged (`owl` files in the [Data](https://github.com/inesosman/AROM/tree/master/Data) folder) (the path of the files should be correct !)
